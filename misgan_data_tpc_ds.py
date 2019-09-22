@@ -97,7 +97,7 @@ class GenerateData(Dataset):
 data_file = "store_returns.dat"
 data = GenerateData(data_file)
 
-batch_size = 2048
+batch_size = 8192
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                          drop_last=True)
 
