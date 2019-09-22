@@ -94,8 +94,8 @@ class GenerateData(Dataset):
 
     def __len__(self):
         return self.data_size
-
-data = GenerateData("data3.csv")
+data_file = "data3.csv"
+data = GenerateData(data_file)
 
 batch_size = 2048
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
@@ -104,10 +104,10 @@ data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
 data.data_size
 
 data_samples, mask_samples, data_origin, _ = next(iter(data_loader))
-print(data_samples[0])
-print(mask_samples[0])
-print(data_origin[0])
-print(torch.norm(mask_samples[0] * data_origin[0] - data_samples[0]))
+#print(data_samples[0])
+#print(mask_samples[0])
+#print(data_origin[0])
+#print(torch.norm(mask_samples[0] * data_origin[0] - data_samples[0]))
 
 """### Masking operator"""
 
@@ -256,7 +256,7 @@ mask_gen.load_state_dict(torch.load('./mask_gen_my_data3_0.2.pt'))
 plot_interval = 500
 critic_updates = 0
 
-for epoch in range(5000):
+for epoch in range(10000):
     for real_data, real_mask, origin_data, _ in data_loader:
 
         real_data = real_data.float().to(device)
@@ -404,10 +404,10 @@ imputer.load_state_dict(torch.load('./imputer_my_data3_0.2.pt'))
 
 alpha = .2
 beta = .2
-plot_interval = 1000
+plot_interval = 500
 critic_updates = 0
-
-for epoch in range(8000):
+loss = []
+for epoch in range(10000):
 #     print("Epoch %d " % epoch)
     for real_data, real_mask, origin_data, index in data_loader:
 
@@ -481,173 +481,18 @@ for epoch in range(8000):
         with torch.no_grad():
             imputer.eval()
             
-            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData("data3.csv"), batch_size=batch_size, shuffle=False,drop_last=True))  
-            print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-            
+            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData(data_file), batch_size=batch_size, shuffle=False,drop_last=True))  
+            #print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
+            loss.append(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
             imputer.train()
 
 imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData("data.csv"), batch_size=batch_size, shuffle=False,drop_last=True))
 
-torch.save(data_gen.state_dict(), './data_gen_my_data3_0.2.pt')
-torch.save(mask_gen.state_dict(), './mask_gen_my_data3_0.2.pt')
-torch.save(imputer.state_dict(),  './imputer_my_data3_0.2.pt')
-
-"""# Cacl accuracy each column
-
-## Calc loss RMSE
-"""
-
-class GenerateData2(Dataset):
-    def print_info(self):        
-        print(self.data_max)
-
-    def __init__(self, data_file,FD):
-        dd = pandas.read_csv(data_file, delimiter=",", header=None)
-        self.data = dd.values.astype(np.float32)
-        self.data2 = dd.head(10000).values.astype(np.float32)
-
-        self.maxs = np.ones((self.data.shape[1]))
-        self.cur_iter = 0
-        self.data_size = self.data2.shape[0]        
-        self.data_dim = self.data2.shape[1]        
-        self.population = [i for i in range(self.data_dim)]
-        self.FD = FD
-
-        # Change the value of the records from continous domain to binary domain
-#         self.data = self.records2onehot(self.data)     
-        self.data_max = np.max(self.data,axis=0)
-        self.n_labels = len(self.data_max)
-    
-        self.data = self.data2/self.data_max
-        self.data = self.data.astype('float64')
-        self.generate_incomplete_data(self.data)
-        
-        np.random.shuffle(self.data)  
-
-        self.print_info()
-
-    def log2(self, val):
-        if val == 0: return 0
-        return int(np.ceil(np.log2(val)))
-    def generate_incomplete_data(self, data):
-        n_masks = self.data_size
-        
-        masks = np.ones((n_masks,self.data_dim))
-        masks[:,self.FD] = 0
-        
-#         print(n_masks)
-#         print(self.data_dim)
+torch.save(data_gen.state_dict(), './data_gen_my_data3.pt')
+torch.save(mask_gen.state_dict(), './mask_gen_my_data3.pt')
+torch.save(imputer.state_dict(),  './imputer_my_data3.pt')
 
 
-#         masks = np.ones((n_masks,self.data_dim))
-#         for i in range(n_masks):
-#           data_hint = random.sample(self.population,2)
-#           for j in data_hint:
-#             masks[i][j] = 0
-        
-        self.masks =masks.astype('float64')       
-        
-        # Mask out missing data by zero
-        self.records = self.data * self.masks
-        
-    def __getitem__(self, index):
-        # return index so we can retrieve the mask location from self.mask_loc
-        return self.records[index], self.masks[index], self.data[index], index
-
-    def __len__(self):
-        return self.data_size
-
-from sklearn.metrics import mean_squared_error 
-batch_size2 = 1
-def cal_loss_MSER2(imputer, data_loader,batch_size):
-  impu_noise = torch.empty(batch_size, output_dim, device=device)
-  
-  imputed_data_mask = []
-  origin_data_mask = []
-  loss = []
-  for real_data, real_mask, origin_data, _ in data_loader:
-    real_data = real_data.float().to(device)
-    real_mask = real_mask.float().to(device)
-    impu_noise.uniform_()
-    imputed_data = imputer(real_data, real_mask, impu_noise)
-    
-    imputed_data = imputed_data.detach().cpu().numpy()
-    origin_data = origin_data.detach().cpu().numpy()
-    masks = real_mask.detach().cpu().numpy()
-    
-    imputed_data_mask.extend(imputed_data*(1-masks))
-    origin_data_mask.extend(origin_data*(1-masks))
-
-  return imputed_data_mask,origin_data_mask
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3.csv",0), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(len(imputed_data_mask))
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-print(np.mean(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=0))
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",1), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",2), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",FD = 3), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",4), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",5), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",6), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3_test.csv",7), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER2(imputer, DataLoader(GenerateData2("data3.csv",8), batch_size=batch_size2, shuffle=False,drop_last=True),batch_size2)  
-print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-
-data_loader2 = DataLoader(GenerateData("data.csv",0))
-
-real_data, real_mask, origin_data, _ = next(iter(data_loader2))
-impu_noise = torch.empty(batch_size, output_dim, device=device)
-real_data = real_data.float().to(device)
-real_mask = real_mask.float().to(device)
-imputed_data = imputer(real_data, real_mask, impu_noise)
-
-real_mask
-
-origin_data
-
-imputed_data
-
-"""## Calc acc"""
-
-def cal_acc(imputer, data_loader,data, data_dim):
-  impu_noise = torch.empty(batch_size, output_dim, device=device)
-  num_row = 0   # tổng số hàng trong dữ liệu
-  acc = {}
-  for real_data, real_mask, origin_data, _ in data_loader:
-    real_data = real_data.float().to(device)
-    real_mask = real_mask.float().to(device)
-    impu_noise.uniform_()
-    imputed_data = imputer(real_data, real_mask, impu_noise)
-    
-    imputed_data = (imputed_data.detach().cpu().numpy(), keep_norm=False)
-    origin_data = origin_data.detach().cpu().numpy(), keep_norm=False
-    masks = data.onehot2masks(real_mask.detach().cpu().numpy())
-    
-    for i in range(data_dim):
-#       print(i)
-      if i not in acc.keys():
-        acc[i] = []
-      indices = masks[:,i] == 0
-      imputed_data_i = imputed_data[:,i][indices]
-      origin_data_i = origin_data[:,i][indices]
-#       print((imputed_data_i.astype(np.int64) == origin_data_i.astype(np.int64)).astype(np.int32))
-      acc[i].extend(((imputed_data_i.astype(np.int64) == origin_data_i.astype(np.int64)).astype(np.int32)))
-#   print(acc)
-  return acc
+import matplotlib.pyplot as plt
+plt.plot(loss)
+plt.savefig(data_file + ".jpg")
