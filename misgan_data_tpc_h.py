@@ -43,7 +43,8 @@ class GenerateData(Dataset):
         print(self.data_max)
 
     def __init__(self, data_file):
-        self.data = pandas.read_csv(data_file, delimiter="|", header=None).values[:,:8].astype(np.float32)
+        self.data = pandas.read_csv(data_file, delimiter="|", header=None).head(50000).values[:,:8].astype(np.float32)
+
 
         self.maxs = np.ones((self.data.shape[1]))
         self.cur_iter = 0
@@ -256,7 +257,7 @@ update_mask_critic = CriticUpdater(
 plot_interval = 500
 critic_updates = 0
 
-for epoch in range(10000):
+for epoch in range(5000):
     for real_data, real_mask, origin_data, _ in data_loader:
 
         real_data = real_data.float().to(device)
@@ -404,10 +405,10 @@ def cal_loss_MSER(imputer, data_loader):
 
 alpha = .2
 beta = .2
-plot_interval = 100
+plot_interval = 500
 critic_updates = 0
 loss = []
-for epoch in range(10000):
+for epoch in range(5000):
 #     print("Epoch %d " % epoch)
     for real_data, real_mask, origin_data, index in data_loader:
 
