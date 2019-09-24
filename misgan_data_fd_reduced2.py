@@ -58,7 +58,7 @@ class GenerateData(Dataset):
         
         # Change the value of the records from continous domain to binary domain
 #         self.data = self.records2onehot(self.data)     
-        self.data_max = np.max(self.data,axis=0)
+        self.data_max = np.max(self.data,axis=0) + 1e-6
         self.n_labels = len(self.data_max)
     
         self.data = self.data/self.data_max
@@ -500,4 +500,4 @@ torch.save(imputer.state_dict(),  './imputer_fd_reduced2.pt')
 
 import matplotlib.pyplot as plt
 plt.plot(loss)
-plt.savefig(data_file + ".jpg")
+plt.savefig(data_file + "2.jpg")
