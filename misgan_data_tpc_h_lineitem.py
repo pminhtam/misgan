@@ -43,13 +43,7 @@ class GenerateData(Dataset):
         print(self.data_max)
 
     def __init__(self, data_file):
-        data = pandas.read_csv(data_file, delimiter="|", header=None).head(50000)
-
-        data['z1'] = data[0]+ data[1]
-        data['z2'] = data[2] + data[3]
-
-        self.data = data.values[:,:8].astype(np.float32)
-
+        self.data = pandas.read_csv(data_file, delimiter="|", header=None).values[:,:8].astype(np.float32)
 
         self.maxs = np.ones((self.data.shape[1]))
         self.cur_iter = 0
@@ -100,20 +94,20 @@ class GenerateData(Dataset):
 
     def __len__(self):
         return self.data_size
-data_file = "lineitem.tbl.8"
-data = GenerateData(data_file)
 
-batch_size = 8192
+data = GenerateData("lineitem.tbl.8")
+
+batch_size = 2048
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                          drop_last=True)
 
 data.data_size
 
 data_samples, mask_samples, data_origin, _ = next(iter(data_loader))
-#print(data_samples[0])
-#print(mask_samples[0])
-#print(data_origin[0])
-#print(torch.norm(mask_samples[0] * data_origin[0] - data_samples[0]))
+print(data_samples[0])
+print(mask_samples[0])
+print(data_origin[0])
+print(torch.norm(mask_samples[0] * data_origin[0] - data_samples[0]))
 
 """### Masking operator"""
 
@@ -262,7 +256,7 @@ update_mask_critic = CriticUpdater(
 plot_interval = 500
 critic_updates = 0
 
-for epoch in range(5000):
+for epoch in range(10000):
     for real_data, real_mask, origin_data, _ in data_loader:
 
         real_data = real_data.float().to(device)
@@ -410,10 +404,10 @@ def cal_loss_MSER(imputer, data_loader):
 
 alpha = .2
 beta = .2
-plot_interval = 500
+plot_interval = 1000
 critic_updates = 0
-loss = []
-for epoch in range(5000):
+
+for epoch in range(10000):
 #     print("Epoch %d " % epoch)
     for real_data, real_mask, origin_data, index in data_loader:
 
@@ -487,18 +481,15 @@ for epoch in range(5000):
         with torch.no_grad():
             imputer.eval()
             
-            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData(data_file), batch_size=batch_size, shuffle=False,drop_last=True))  
-            #print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
-            loss.append(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
+            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData("lineitem.tbl.8"), batch_size=batch_size, shuffle=False,drop_last=True))  
+            print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
+            
             imputer.train()
 
 #imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData("data.csv"), batch_size=batch_size, shuffle=False,drop_last=True))
 
-torch.save(data_gen.state_dict(), './data_gen_tpc_h2.pt')
-torch.save(mask_gen.state_dict(), './mask_gen_tpc_h2.pt')
-torch.save(imputer.state_dict(),  './imputer_tpc_h2.pt')
+torch.save(data_gen.state_dict(), './data_gen_tpc_h.pt')
+torch.save(mask_gen.state_dict(), './mask_gen_tpc_h.pt')
+torch.save(imputer.state_dict(),  './imputer_tpc_h.pt')
 
 
-import matplotlib.pyplot as plt
-plt.plot(loss)
-plt.savefig(data_file + ".jpg")

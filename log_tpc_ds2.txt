@@ -1,0 +1,109 @@
+misgan_data_tpc_ds2.py:63: RuntimeWarning: invalid value encountered in true_divide
+  self.data = self.data/self.data_max
+misgan_data_tpc_ds2.py:63: RuntimeWarning: invalid value encountered in true_divide
+  self.data = self.data/self.data_max
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+Epoch: 499
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 999
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 1499
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 1999
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 2499
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 2999
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 3499
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 3999
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 4499
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+Epoch: 4999
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+tensor([nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan],
+       device='cuda:0')
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
+[2.452819e+06 6.119900e+04 1.800000e+04 9.999900e+04 1.920767e+06
+ 7.200000e+03 5.000000e+04 1.000000e+01 3.500000e+01 4.198200e+04
+ 1.000000e+02 1.438073e+04 1.210860e+03 1.534804e+04 1.000000e+02
+ 7.890960e+03 1.307425e+04 1.136824e+04 1.121139e+04 8.996910e+03
+ 0.000000e+00 2.513884e+06 1.177960e+05]
