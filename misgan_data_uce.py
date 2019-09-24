@@ -64,7 +64,9 @@ class GenerateData(Dataset):
         np.random.shuffle(self.data)  
                
         self.print_info()
-
+    def suff(self):
+        np.random.shuffle(self.data)
+        self.generate_incomplete_data(self.data)
     def log2(self, val):
         if val == 0: return 0
         return int(np.ceil(np.log2(val)))
@@ -409,6 +411,9 @@ critic_updates = 0
 loss = []
 for epoch in range(5000):
 #     print("Epoch %d " % epoch)
+    data.suff()
+    data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
+                         drop_last=True)
     for real_data, real_mask, origin_data, index in data_loader:
 
         real_data = real_data.float().to(device)
