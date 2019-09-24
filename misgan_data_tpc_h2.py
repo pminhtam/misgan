@@ -43,12 +43,12 @@ class GenerateData(Dataset):
         print(self.data_max)
 
     def __init__(self, data_file):
-        data = pandas.read_csv(data_file, delimiter="|", header=None).head(50000)
+        data = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5,6,7]].head(50000)
 
         data['z1'] = data[0]+ data[1]
         data['z2'] = data[2] + data[3]
 
-        self.data = data.values[:,:8].astype(np.float32)
+        self.data = data.values.astype(np.float32)
 
 
         self.maxs = np.ones((self.data.shape[1]))
