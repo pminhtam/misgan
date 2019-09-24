@@ -43,7 +43,7 @@ class GenerateData(Dataset):
         print(self.data_max)
 
     def __init__(self, data_file):
-        self.data = pandas.read_csv(data_file, delimiter=",",header=None, skiprows=1)[[3,5,6,7,11,14,15,17,19,21,22,23]].head(50000).values.astype(np.float32)
+        self.data = pandas.read_csv(data_file, delimiter=",",header=None, skiprows=1)[[3,5,6,7,11,14,15,17,19,21,22,23]].head(50000).replace(np.nan, 0).values.astype(np.float32)
 
         self.maxs = np.ones((self.data.shape[1]))
         self.cur_iter = 0
