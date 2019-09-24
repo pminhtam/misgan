@@ -43,7 +43,7 @@ class GenerateData(Dataset):
         print(self.data_max)
 
     def __init__(self, data_file):
-        data = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5,6,7]].head(50000)
+        data = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5,6,7]].head(20000)
 
         data['z1'] = data[0]+ data[1]
         data['z2'] = data[2] + data[3]
@@ -264,7 +264,7 @@ update_mask_critic = CriticUpdater(
 plot_interval = 500
 critic_updates = 0
 
-for epoch in range(5000):
+for epoch in range(1000):
     for real_data, real_mask, origin_data, _ in data_loader:
 
         real_data = real_data.float().to(device)
@@ -415,7 +415,7 @@ beta = .2
 plot_interval = 500
 critic_updates = 0
 loss = []
-for epoch in range(5000):
+for epoch in range(1000):
 #     print("Epoch %d " % epoch)
     data.suff()
     data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,

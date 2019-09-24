@@ -259,7 +259,7 @@ update_mask_critic = CriticUpdater(
 plot_interval = 500
 critic_updates = 0
 
-for epoch in range(5000):
+for epoch in range(1000):
     for real_data, real_mask, origin_data, _ in data_loader:
 
         real_data = real_data.float().to(device)
@@ -410,7 +410,7 @@ beta = .2
 plot_interval = 500
 critic_updates = 0
 loss = []
-for epoch in range(5000):
+for epoch in range(1000):
 #     print("Epoch %d " % epoch)
     data.suff()
     data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
