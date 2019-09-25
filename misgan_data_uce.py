@@ -58,7 +58,7 @@ class GenerateData(Dataset):
 
         self.n_labels = len(self.data_max)
 
-        self.data = (self.data - self.data_min) / self.data_max
+        self.data = (self.data-self.data_min)/(self.data_max-self.data_min)
         self.data = self.data.astype('float64')
         self.generate_incomplete_data(self.data)
         
