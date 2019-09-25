@@ -25,80 +25,22 @@ import argparse
 import random
 import cf
 from model import *
+from data_generate import GenerateData
 use_cuda = torch.cuda.is_available()
 device = torch.device('cuda' if use_cuda else 'cpu')
 
 device
 
-"""## Structure dataset"""
 
-class GenerateData(Dataset):
-    def print_info(self):        
-        print(self.data_max)
-
-    def __init__(self, data_file):
-        data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3,4,5,6,7]].head(cf.num_row)
-        data['z1'] = data[3]+ data[4]
-        data['z2'] = data[5] + data[6]
-        
-        self.data = data.values.astype(np.float32)
-
-
-        self.maxs = np.ones((self.data.shape[1]))
-        self.cur_iter = 0
-        self.data_size = self.data.shape[0]        
-        self.data_dim = self.data.shape[1]        
-        self.population = [i for i in range(self.data_dim)]
-        
-        # Change the value of the records from continous domain to binary domain
-#         self.data = self.records2onehot(self.data)     
-        self.data_max = np.max(self.data,axis=0) + 1e-6
-        self.data_min = np.min(self.data,axis=0)
-
-        self.n_labels = len(self.data_max)
-    
-        self.data = (self.data-self.data_min)/(self.data_max-self.data_min)
-        self.data = self.data.astype('float64')
-        self.generate_incomplete_data(self.data)
-        
- #         np.random.seed(0)
-        np.random.shuffle(self.data)  
-               
-        self.print_info()
-    def suff(self):
-        np.random.shuffle(self.data)
-        self.generate_incomplete_data(self.data)
-    def log2(self, val):
-        if val == 0: return 0
-        return int(np.ceil(np.log2(val)))
-    def generate_incomplete_data(self, data):
-        n_masks = self.data_size
-        
-        masks = np.random.choice(2, size=(n_masks, self.data_dim), p=[0.2, 0.8])
-
-#         print(n_masks)
-#         print(self.data_dim)
-
-
-#         masks = np.ones((n_masks,self.data_dim))
-#         for i in range(n_masks):
-#           data_hint = random.sample(self.population,2)
-#           for j in data_hint:
-#             masks[i][j] = 0
-        
-        self.masks =masks.astype('float64')       
-        
-        # Mask out missing data by zero
-        self.records = self.data * self.masks
-        
-    def __getitem__(self, index):
-        # return index so we can retrieve the mask location from self.mask_loc
-        return self.records[index], self.masks[index], self.data[index], index
-
-    def __len__(self):
-        return self.data_size
 data_file = "fd-reduced-30.csv"
-data = GenerateData(data_file)
+
+data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(cf.num_row)
+data['z1'] = data[3] + data[4]
+data['z2'] = data[5] + data[6]
+
+data = data.values.astype(np.float32)
+
+data = GenerateData(data_file,data)
 
 batch_size = 8192
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
