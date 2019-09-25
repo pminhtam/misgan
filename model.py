@@ -5,6 +5,7 @@ from torch.autograd import grad
 from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 from torchvision import datasets, transforms
+import numpy as np
 
 use_cuda = torch.cuda.is_available()
 device = torch.device('cuda' if use_cuda else 'cpu')
@@ -152,6 +153,8 @@ class Imputer(nn.Module):
 
 
 def cal_loss_MSER(imputer, data_loader,batch_size,output_dim):
+    np.random.seed(0)
+    torch.manual_seed(0)
     impu_noise = torch.empty(batch_size, output_dim, device=device)
 
     imputed_data_mask = []

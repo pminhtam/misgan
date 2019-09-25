@@ -45,7 +45,6 @@ batch_size = 8192
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                          drop_last=True)
 
-data.data_size
 
 data_samples, mask_samples, data_origin, _ = next(iter(data_loader))
 #print(data_samples[0])
