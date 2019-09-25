@@ -43,7 +43,7 @@ class GenerateData(Dataset):
         print(self.data_max)
 
     def __init__(self, data_file):
-        self.data = pandas.read_csv(data_file, delimiter="|", header=None).head(20000).replace(np.nan, 0).values.astype(np.float32)
+        self.data = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5]].head(20000).replace(np.nan, 0).values.astype(np.float32)
 
         self.maxs = np.ones((self.data.shape[1]))
         self.cur_iter = 0
@@ -54,9 +54,11 @@ class GenerateData(Dataset):
         # Change the value of the records from continous domain to binary domain
 #         self.data = self.records2onehot(self.data)     
         self.data_max = np.max(self.data,axis=0) + 1e-6
+        self.data_min = np.min(self.data,axis=0)
+
         self.n_labels = len(self.data_max)
     
-        self.data = self.data/self.data_max
+        self.data = (self.data-self.data_min)/self.data_max
         self.data = self.data.astype('float64')
         self.generate_incomplete_data(self.data)
         
