@@ -274,11 +274,11 @@ for epoch in range(cf.epoch_2):
 
 #imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData("data.csv"), batch_size=batch_size, shuffle=False,drop_last=True))
 
-torch.save(data_gen.state_dict(), './data_gen_tpc_h2.pt')
-torch.save(mask_gen.state_dict(), './mask_gen_tpc_h2.pt')
-torch.save(imputer.state_dict(),  './imputer_tpc_h2.pt')
+torch.save(data_gen.state_dict(), './model/data_gen_tpc_h2.pt')
+torch.save(mask_gen.state_dict(), './model/mask_gen_tpc_h2.pt')
+torch.save(imputer.state_dict(),  './model/imputer_tpc_h2.pt')
 
 
 import matplotlib.pyplot as plt
 plt.plot(loss)
-plt.savefig(data_file + "2.jpg")
+plt.savefig("./img/"+data_file + "2.jpg")
