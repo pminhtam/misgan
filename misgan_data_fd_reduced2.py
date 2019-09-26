@@ -42,20 +42,16 @@ data = data.values.astype(np.float32)
 
 data = GenerateData(data_file,data)
 
-batch_size = 8192
+batch_size = cf.batch_size
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                          drop_last=True)
 
-data.data_size
 
 data_samples, mask_samples, data_origin, _ = next(iter(data_loader))
-#print(data_samples[0])
-#print(mask_samples[0])
-#print(data_origin[0])
-#print(torch.norm(mask_samples[0] * data_origin[0] - data_samples[0]))
 
 
-nz = 128   # dimensionality of the latent code
+
+nz = cf.nz   # dimensionality of the latent code
 n_critic = 5
 alpha = .2
 output_dim = data.n_labels
