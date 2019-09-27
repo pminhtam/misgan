@@ -5,6 +5,7 @@ import random
 import cf
 from model_dd import *
 from data_generate import GenerateData
+from torch.utils.data import DataLoader
 
 use_cuda = torch.cuda.is_available()
 device = torch.device('cuda' if use_cuda else 'cpu')
@@ -39,14 +40,14 @@ def train(data):
         netD_imp.parameters(), lr=lr, betas=(beta1, beta2))
 
 
-    for iter in range(n_iter):
+    for _ in range(n_iter):
     # for iter in range(5):
     #     print(iter)
         data.suff()
         data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                              drop_last=True)
-        for _ in range(n_iter_d):
-        # for real_data, real_mask, origin_data, _ in data_loader:
+        # for _ in range(n_iter_d):
+        for real_data, real_mask, origin_data, _ in data_loader:
             real_data, real_mask, origin_data, _ = next(iter(data_loader))
             netG_imp.zero_grad()
             netD_imp.zero_grad()
