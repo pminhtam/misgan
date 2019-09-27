@@ -35,10 +35,10 @@ device
 
 data_file = "fd-reduced-30.csv"
 
-data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(
+data_ori = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(
     cf.num_row).values.astype(np.float32)
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 batch_size = cf.batch_size
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
@@ -259,7 +259,7 @@ for epoch in range(cf.epoch_2):
         with torch.no_grad():
             imputer.eval()
             
-            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData(data_file), batch_size=batch_size, shuffle=False,drop_last=True),batch_size,output_dim)
+            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData(data_file,data_ori), batch_size=batch_size, shuffle=False,drop_last=True),batch_size,output_dim)
             #print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
             loss.append(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
             imputer.train()

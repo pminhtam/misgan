@@ -57,7 +57,7 @@ for iter in range(n_iter):
 
 
         if use_cuda:
-            real_data, real_mask = real_data.cuda(), real_mask.cuda()
+            real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
 
             fake_imp = netG_imp(real_data, real_mask).detach()
             real_imp = real_data.detach()
@@ -90,7 +90,7 @@ for iter in range(n_iter):
         netD_imp.zero_grad()
 
         if use_cuda:
-            real_data, real_mask = real_data.cuda(), real_mask.cuda()
+            real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
         else:
             real_data, real_mask = real_data.float(), real_mask.float()
         fake_imp = netG_imp(real_data, real_mask)

@@ -34,9 +34,9 @@ import cf
 
 
 data_file = "store_returns.dat"
-data = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5]].head(cf.num_row).replace(np.nan, 0).values.astype(np.float32)
+data_ori = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5]].head(cf.num_row).replace(np.nan, 0).values.astype(np.float32)
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 batch_size = cf.batch_size
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
@@ -262,7 +262,7 @@ for epoch in range(cf.epoch_2):
         with torch.no_grad():
             imputer.eval()
             
-            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData(data_file), batch_size=batch_size, shuffle=False,drop_last=True),batch_size,output_dim)
+            imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, DataLoader(GenerateData(data_file,data_ori), batch_size=batch_size, shuffle=False,drop_last=True),batch_size,output_dim)
             #print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
             loss.append(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
             imputer.train()

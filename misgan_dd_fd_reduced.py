@@ -14,10 +14,10 @@ device = torch.device('cuda' if use_cuda else 'cpu')
 
 data_file = "fd-reduced-30.csv"
 
-data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(
+data_ori = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(
     cf.num_row).values.astype(np.float32)
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 batch_size = cf.batch_size
 data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
@@ -55,7 +55,7 @@ for iter in range(n_iter):
 
 
         if use_cuda:
-            real_data, real_mask = real_data.cuda(), real_mask.cuda()
+            real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
 
             fake_imp = netG_imp(real_data, real_mask).detach()
             real_imp = real_data.detach()
@@ -88,7 +88,7 @@ for iter in range(n_iter):
         netD_imp.zero_grad()
 
         if use_cuda:
-            real_data, real_mask = real_data.cuda(), real_mask.cuda()
+            real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
         else:
             real_data, real_mask = real_data.float(), real_mask.float()
         fake_imp = netG_imp(real_data, real_mask)
