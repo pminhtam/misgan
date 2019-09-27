@@ -13,7 +13,7 @@ class Discriminator(nn.Module):
 
     def __init__(self, n_labels):
         super(Discriminator, self).__init__()
-        input_dim = sum(n_labels)
+        input_dim = n_labels
         self.main = nn.Sequential(
             nn.Linear(input_dim, 1024),
             nn.ReLU(),
@@ -33,7 +33,7 @@ class MultipleBranchesDiscriminator(nn.Module):
         super(MultipleBranchesDiscriminator, self).__init__()
         input_dim = n_labels
         branches = []
-        for i in range(n_labels):
+        for i in range(1):
             branch = nn.Sequential(
                 nn.Linear(input_dim, 512),
                 nn.ReLU(),

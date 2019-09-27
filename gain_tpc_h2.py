@@ -21,63 +21,7 @@ Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
 
-H_Dim1 = Dim
-H_Dim2 = Dim
-# 1.1. Data Vector
-X = tf.placeholder(tf.float32, shape = [None, Dim])
-# 1.2. Mask Vector
-M = tf.placeholder(tf.float32, shape = [None, Dim])
-# 1.3. Hint vector
-H = tf.placeholder(tf.float32, shape = [None, Dim])
-# 1.4. X with missing values
-New_X = tf.placeholder(tf.float32, shape = [None, Dim])
-
-D_W1 = tf.Variable(xavier_init([Dim*2, H_Dim1]))     # Data + Hint as inputs
-D_b1 = tf.Variable(tf.zeros(shape = [H_Dim1]))
-
-D_W2 = tf.Variable(xavier_init([H_Dim1, H_Dim2]))
-D_b2 = tf.Variable(tf.zeros(shape = [H_Dim2]))
-
-D_W3 = tf.Variable(xavier_init([H_Dim2, Dim]))
-D_b3 = tf.Variable(tf.zeros(shape = [Dim]))       # Output is multi-variate
-
-theta_D = [D_W1, D_W2, D_W3, D_b1, D_b2, D_b3]
-
-G_W1 = tf.Variable(xavier_init([Dim*2, H_Dim1]))     # Data + Mask as inputs (Random Noises are in Missing Components)
-G_b1 = tf.Variable(tf.zeros(shape = [H_Dim1]))
-
-G_W2 = tf.Variable(xavier_init([H_Dim1, H_Dim2]))
-G_b2 = tf.Variable(tf.zeros(shape = [H_Dim2]))
-
-G_W3 = tf.Variable(xavier_init([H_Dim2, Dim]))
-G_b3 = tf.Variable(tf.zeros(shape = [Dim]))
-
-theta_G = [G_W1, G_W2, G_W3, G_b1, G_b2, G_b3]
-
-
-# Generator
-G_sample = generator(New_X,M,G_W1,G_W2,G_W3,G_b1,G_b2,G_b3)
-
-# Combine with original data
-Hat_New_X = New_X * M + G_sample * (1-M)
-
-# Discriminator
-D_prob = discriminator(Hat_New_X, H,D_W1,D_W2,D_W3,D_b1,D_b2,D_b3)
-
-
-D_loss1 = -tf.reduce_mean(M * tf.log(D_prob + 1e-8) + (1-M) * tf.log(1. - D_prob + 1e-8))
-G_loss1 = -tf.reduce_mean((1-M) * tf.log(D_prob + 1e-8))
-MSE_train_loss = tf.reduce_mean((M * New_X - M * G_sample)**2) / tf.reduce_mean(M)
-
-D_loss = D_loss1
-G_loss = G_loss1 + alpha * MSE_train_loss
-
-#%% MSE Performance metric
-MSE_test_loss = tf.reduce_mean(((1-M) * X - (1-M)*G_sample)**2) / tf.reduce_mean(1-M)
-
-
-D_solver = tf.train.AdamOptimizer().minimize(D_loss, var_list=theta_D)
-G_solver = tf.train.AdamOptimizer().minimize(G_loss, var_list=theta_G)
+X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver = make_model(Dim)
 
 # Sessions
 sess = tf.Session()
