@@ -25,5 +25,5 @@ data = GenerateData(data_file,data)
 
 netG_imp,netD_imp = train(data)
 
-torch.save(netG_imp,   './model/Gim_fd.pt')
-torch.save(netD_imp,  './model/Dim_fd.pt')
+torch.save(netG_imp,   './model/Gim_uce2pt')
+torch.save(netD_imp,  './model/Dim_uce2.pt')
