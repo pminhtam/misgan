@@ -46,59 +46,58 @@ def train(data):
         data.suff()
         data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                              drop_last=True)
-        # for _ in range(n_iter_d):
         for real_data, real_mask, origin_data, _ in data_loader:
-            real_data, real_mask, origin_data, _ = next(iter(data_loader))
-            netG_imp.zero_grad()
-            netD_imp.zero_grad()
+            for _ in range(n_iter_d):
+            # for real_data, real_mask, origin_data, _ in data_loader:
+            #     real_data, real_mask, origin_data, _ = next(iter(data_loader))
+                netG_imp.zero_grad()
+                netD_imp.zero_grad()
+                if use_cuda:
+                    real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
 
+                    fake_imp = netG_imp(real_data, real_mask).detach()
+                    real_imp = real_data.detach()
+                else:
+                    real_data, real_mask = real_data.float(), real_mask.float()
 
-            if use_cuda:
-                real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
+                    fake_imp = netG_imp(real_data, real_mask)
+                    real_imp = real_data
+                # train with real
+                D_real_imp = netD_imp(real_data)
+                D_real_imp = D_real_imp.mean()
 
-                fake_imp = netG_imp(real_data, real_mask).detach()
-                real_imp = real_data.detach()
-            else:
-                real_data, real_mask = real_data.float(), real_mask.float()
+                # train with fake
+                D_fake_imp = netD_imp(fake_imp)
+                D_fake_imp = D_fake_imp.mean()
 
+                gradient_penalty = calc_gradient_penalty(
+                    netD_imp, real_imp, fake_imp, batch_size,use_cuda,lambda_)
+                D_imp_cost = D_fake_imp - D_real_imp + gradient_penalty
+                dist = D_real_imp - D_fake_imp
+                D_imp_cost.backward()
+                optimizerD_imp.step()
+
+            ############################
+            # (2) Update G_imp network
+            ############################
+
+            # for real_data, real_mask, origin_data, _ in data_loader:
+            for _ in range(n_iter_g):
+                # real_data, real_mask, origin_data, _ = next(iter(data_loader))
+
+                netG_imp.zero_grad()
+                netD_imp.zero_grad()
+
+                if use_cuda:
+                    real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
+                else:
+                    real_data, real_mask = real_data.float(), real_mask.float()
                 fake_imp = netG_imp(real_data, real_mask)
-                real_imp = real_data
-            # train with real
-            D_real_imp = netD_imp(real_data)
-            D_real_imp = D_real_imp.mean()
 
-            # train with fake
-            D_fake_imp = netD_imp(fake_imp)
-            D_fake_imp = D_fake_imp.mean()
-
-            gradient_penalty = calc_gradient_penalty(
-                netD_imp, real_imp, fake_imp, batch_size,use_cuda,lambda_)
-            D_imp_cost = D_fake_imp - D_real_imp + gradient_penalty
-            dist = D_real_imp - D_fake_imp
-            D_imp_cost.backward()
-            optimizerD_imp.step()
-
-        ############################
-        # (2) Update G_imp network
-        ############################
-
-        # for real_data, real_mask, origin_data, _ in data_loader:
-        for _ in range(n_iter_g):
-            real_data, real_mask, origin_data, _ = next(iter(data_loader))
-
-            netG_imp.zero_grad()
-            netD_imp.zero_grad()
-
-            if use_cuda:
-                real_data, real_mask = real_data.float().cuda(), real_mask.float().cuda()
-            else:
-                real_data, real_mask = real_data.float(), real_mask.float()
-            fake_imp = netG_imp(real_data, real_mask)
-
-            G_imp_cost = netD_imp(fake_imp)
-            # G_imp_cost = -G_imp_cost.mean()* 0.0 + 1.0 * torch.sqrt(torch.sum((real_data-fake_imp)**2))
-            G_imp_cost = -G_imp_cost.mean()
-            G_imp_cost.backward()
-            optimizerG_imp.step()
+                G_imp_cost = netD_imp(fake_imp)
+                # G_imp_cost = -G_imp_cost.mean()* 0.0 + 1.0 * torch.sqrt(torch.sum((real_data-fake_imp)**2))
+                G_imp_cost = -G_imp_cost.mean()
+                G_imp_cost.backward()
+                optimizerG_imp.step()
     return netG_imp,netD_imp
 
