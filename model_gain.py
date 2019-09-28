@@ -102,4 +102,4 @@ def make_model(Dim,alpha = 10):
 
     D_solver = tf.train.AdamOptimizer().minimize(D_loss, var_list=theta_D)
     G_solver = tf.train.AdamOptimizer().minimize(G_loss, var_list=theta_G)
-    return X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver
+    return X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample

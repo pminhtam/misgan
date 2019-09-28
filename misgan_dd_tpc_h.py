@@ -15,11 +15,11 @@ device = torch.device('cuda' if use_cuda else 'cpu')
 
 data_file = "lineitem.tbl.8"
 
-data = pandas.read_csv(data_file, delimiter="|", header=None)[[0, 1, 2, 4, 5]].head(cf.num_row).values.astype(
+data_ori = pandas.read_csv(data_file, delimiter="|", header=None)[[0, 1, 2, 4, 5]].head(cf.num_row).values.astype(
     np.float32)
 
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 netG_imp,netD_imp = train(data)
 

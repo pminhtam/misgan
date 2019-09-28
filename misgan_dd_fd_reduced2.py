@@ -19,9 +19,9 @@ data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4,
 data['z1'] = data[3] + data[4]
 data['z2'] = data[5] + data[6]
 
-data = data.values.astype(np.float32)
+data_ori = data.values.astype(np.float32)
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 netG_imp,netD_imp = train(data)
 

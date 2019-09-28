@@ -18,9 +18,9 @@ data_file = "store_returns.dat"
 data = pandas.read_csv(data_file, delimiter="|", header=None)[[0, 1, 2, 3, 4, 5]].head(cf.num_row).replace(np.nan, 0)
 data['z1'] = data[0] + data[1]
 data['z2'] = data[2] + data[3]
-data = data.values.astype(np.float32)
+data_ori = data.values.astype(np.float32)
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 netG_imp,netD_imp = train(data)
 

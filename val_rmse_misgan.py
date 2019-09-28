@@ -19,13 +19,8 @@ data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4,
 data['z1'] = data[3] + data[4]
 data['z2'] = data[5] + data[6]
 
-data = data.values.astype(np.float32)
+data_ori = data.values.astype(np.float32)
 
-data = GenerateDataVal(data_file, data,[0,1])
-
-batch_size = 1
-data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
-                         drop_last=True)
 
 nz = 128  # dimensionality of the latent code
 n_critic = 5
@@ -35,20 +30,15 @@ output_dim = data.n_labels
 
 data_gen = FCDataGenerator(nz, output_dim).to(device)
 mask_gen = FCMaskGenerator(nz, output_dim).to(device)
-
-
-
 imputer = Imputer(output_dim).to(device)
-impu_critic = FCCritic(output_dim).to(device)
-impu_noise = torch.empty(batch_size, output_dim, device=device)
+
+data_gen.load_state_dict(torch.load('./model/data_gen_tpc_ds2.pt'))
+mask_gen.load_state_dict(torch.load('./model/mask_gen_tpc_ds2.pt'))
+imputer.load_state_dict(torch.load('./model/imputer_tpc_ds2.pt'))
 
 
-
-
-data_gen.load_state_dict(torch.load('./data_gen_tpc_ds2.pt'))
-mask_gen.load_state_dict(torch.load('./mask_gen_tpc_ds2.pt'))
-imputer.load_state_dict(torch.load('./imputer_tpc_ds2.pt'))
-
-imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, data_loader,batch_size,output_dim)
+data = GenerateDataVal(data_file, data_ori,[0,1])
+data_loader = DataLoader(data, batch_size=1, shuffle=False,drop_last=True)
+imputed_data_mask,origin_data_mask = cal_loss_MSER(imputer, data_loader,1,output_dim)
 print(np.mean(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=0))
 

@@ -22,7 +22,7 @@ def train(data):
     beta2 = 0.999
     n_iter_d = 2
     n_iter_g = 1
-    n_iter = 50
+    n_iter = cf.n_iter
 
     netG_imp = Generator_Imputer(data.n_labels)
     netG_imp.apply(weights_init)

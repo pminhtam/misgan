@@ -15,10 +15,10 @@ device = torch.device('cuda' if use_cuda else 'cpu')
 
 data_file = "uce-results-by-school-2011-2015.csv"
 
-data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 6, 7, 15, 22]].head(
+data_ori = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 6, 7, 15, 22]].head(
     cf.num_row).replace(np.nan, 0).values.astype(np.float32)
 
-data = GenerateData(data_file,data)
+data = GenerateData(data_file,data_ori)
 
 netG_imp,netD_imp = train(data)
 

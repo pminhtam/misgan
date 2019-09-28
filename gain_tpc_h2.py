@@ -21,7 +21,7 @@ Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
 
-X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver = make_model(Dim)
+X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
 
 # Sessions
 sess = tf.Session()
@@ -30,7 +30,7 @@ sess.run(tf.global_variables_initializer())
 # %% Start Iterations
 train_loss_curr = []
 test_loss_curr = []
-for it in range(500000):
+for it in range(cf.gain_iter):
     # %% Inputs
     mb_idx = sample_idx(Train_No, mb_size)
     X_mb = trainX[mb_idx, :]
@@ -54,7 +54,7 @@ for it in range(500000):
         print()
 
 saver = tf.train.Saver()
-saver.save(sess, "./model/gain_fd_reduced.ckpt")
+saver.save(sess, "./model/gain_h2.ckpt")
 
 import matplotlib.pyplot as plt
 plt.subplot(2, 1, 1)
