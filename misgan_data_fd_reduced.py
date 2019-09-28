@@ -11,7 +11,6 @@ from misgan_train import train
 use_cuda = torch.cuda.is_available()
 device = torch.device('cuda' if use_cuda else 'cpu')
 
-device
 
 """## Structure dataset"""
 
@@ -20,7 +19,7 @@ data_file = "fd-reduced-30.csv"
 data_ori = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(
     cf.num_row).values.astype(np.float32)
 
-data = GenerateData(data_file,data_ori)
+data = GenerateData(data_ori)
 
 data_gen,mask_gen,imputer,loss = train(data)
 

@@ -9,4 +9,4 @@ n_iter = 5000
 
 
 ## gain
-gain_iter = 5000
+gain_iter = 50000

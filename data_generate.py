@@ -8,7 +8,7 @@ class GenerateData(Dataset):
     def print_info(self):
         print(self.data_max)
 
-    def __init__(self, data_file,data):
+    def __init__(self, data):
         self.data = data
 
         self.maxs = np.ones((self.data.shape[1]))

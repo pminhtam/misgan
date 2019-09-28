@@ -17,7 +17,7 @@ data_file = "store_returns.dat"
 data_ori = pandas.read_csv(data_file, delimiter="|", header=None)[[0,1,2,3,4,5]].head(cf.num_row).replace(np.nan, 0).values.astype(np.float32)
 
 
-data = GenerateData(data_file,data_ori)
+data = GenerateData(data_ori)
 
 netG_imp,netD_imp = train(data)
 

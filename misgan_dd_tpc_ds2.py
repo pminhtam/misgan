@@ -20,7 +20,7 @@ data['z1'] = data[0] + data[1]
 data['z2'] = data[2] + data[3]
 data_ori = data.values.astype(np.float32)
 
-data = GenerateData(data_file,data_ori)
+data = GenerateData(data_ori)
 
 netG_imp,netD_imp = train(data)
 

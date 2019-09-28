@@ -17,7 +17,7 @@ data_file = "fd-reduced-30.csv"
 data_ori = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 4, 5, 6, 7]].head(
     cf.num_row).values.astype(np.float32)
 
-data = GenerateData(data_file,data_ori)
+data = GenerateData(data_ori)
 
 netG_imp,netD_imp = train(data)
 

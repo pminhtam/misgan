@@ -24,7 +24,7 @@ data['z1'] = data[3] + data[6]
 data['z2'] = data[7] + data[15]
 data_ori = data.values.astype(np.float32)
 
-data = GenerateData(data_file,data_ori)
+data = GenerateData(data_ori)
 
 data_gen,mask_gen,imputer,loss = train(data)
 
