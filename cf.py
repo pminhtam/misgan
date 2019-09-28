@@ -1,11 +1,11 @@
 num_row = 65536
-epoch_1 = 2000
-epoch_2 = 2000
+epoch_1 = 1000
+epoch_2 = 1500
 nz = 256
 batch_size = 8192
 
 ## dd
-n_iter = 3000
+n_iter = 2500
 
 
 ## gain
