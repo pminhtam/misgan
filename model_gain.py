@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-
+import cf
 
 # 1. Xavier Initialization Definition
 def xavier_init(size):
@@ -39,7 +39,7 @@ def discriminator(new_x, h,D_W1,D_W2,D_W3,D_b1,D_b2,D_b3):
 def sample_Z(m, n):
     return np.random.uniform(0., 0.01, size = [m, n])
 
-# Mini-batch generation
+# # Mini-batch generation
 def sample_idx(m, n):
     A = np.random.permutation(m)
     idx = A[:n]
@@ -103,3 +103,34 @@ def make_model(Dim,alpha = 10):
     D_solver = tf.train.AdamOptimizer().minimize(D_loss, var_list=theta_D)
     G_solver = tf.train.AdamOptimizer().minimize(G_loss, var_list=theta_G)
     return X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample
+
+def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,trainM,sess):
+    # %% Start Iterations
+    mb_size = 1024
+    p_miss = 0.2
+    p_hint = 0.9
+
+    train_loss_curr = []
+    test_loss_curr = []
+    # for it in range(cf.gain_iter):
+    for it in range(1):
+        # %% Inputs
+        for ii in range(int(Train_No / mb_size)):
+            mb_idx = [i for i in range(ii * mb_size, (ii + 1) * mb_size)]
+            # mb_idx = sample_idx(Train_No, mb_size)
+            X_mb = trainX[mb_idx, :]
+
+            Z_mb = sample_Z(mb_size, Dim)
+            M_mb = trainM[mb_idx, :]
+            H_mb1 = sample_M(mb_size, Dim, 1 - p_hint)
+            H_mb = M_mb * H_mb1
+
+            New_X_mb = M_mb * X_mb + (1 - M_mb) * Z_mb  # Missing Data Introduce
+
+            _, D_loss_curr = sess.run([D_solver, D_loss1], feed_dict={M: M_mb, New_X: New_X_mb, H: H_mb})
+            _, G_loss_curr, MSE_train_loss_curr, MSE_test_loss_curr = sess.run(
+                [G_solver, G_loss1, MSE_train_loss, MSE_test_loss],
+                feed_dict={X: X_mb, M: M_mb, New_X: New_X_mb, H: H_mb})
+            train_loss_curr.append(MSE_train_loss_curr)
+            test_loss_curr.append(MSE_test_loss_curr)
+    return train_loss_curr,test_loss_curr

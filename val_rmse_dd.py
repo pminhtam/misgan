@@ -33,15 +33,17 @@ def cal_loss_MSER(netG_imp, data_loader):
 
 """## Structure dataset"""
 
-data_file = "uce-results-by-school-2011-2015.csv"
-data = pandas.read_csv(data_file, delimiter=",", header=None, skiprows=1)[[3, 6, 7, 15, 22]].head(cf.num_row).replace(
-    np.nan, 0)
-data['z1'] = data[3] + data[6]
-data['z2'] = data[7] + data[15]
+data_file = "lineitem.tbl.8"
+
+data = pandas.read_csv(data_file, delimiter="|", header=None)[[0, 1, 2, 4, 5]].head(cf.num_row)
+
+data['z1'] = data[0] + data[1]
+data['z2'] = data[2] + data[4]
+
 data_ori = data.values.astype(np.float32)
 
-netG_imp = torch.load('./model/Gim_uce2pt',map_location='cpu')
-netD_imp = torch.load('./model/Dim_uce2.pt',map_location='cpu')
+netG_imp = torch.load('./model/Gim_h2.pt',map_location='cpu')
+netD_imp = torch.load('./model/Dim_h2.pt',map_location='cpu')
 
 data = GenerateDataVal(data_file,data_ori,[2,3,4,5,6])
 imputed_data_mask,origin_data_mask = cal_loss_MSER(netG_imp, DataLoader(data, batch_size=1, shuffle=False,drop_last=True))

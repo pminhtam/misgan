@@ -27,31 +27,10 @@ X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sam
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
-# %% Start Iterations
-train_loss_curr = []
-test_loss_curr = []
-for it in range(cf.gain_iter):
-    # %% Inputs
-    mb_idx = sample_idx(Train_No, mb_size)
-    X_mb = trainX[mb_idx, :]
+np.random.seed(0)
+np.random.shuffle(trainX)
+train_loss_curr,test_loss_curr = train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,trainM,sess)
 
-    Z_mb = sample_Z(mb_size, Dim)
-    M_mb = trainM[mb_idx, :]
-    H_mb1 = sample_M(mb_size, Dim, 1 - p_hint)
-    H_mb = M_mb * H_mb1
-
-    New_X_mb = M_mb * X_mb + (1 - M_mb) * Z_mb  # Missing Data Introduce
-
-    _, D_loss_curr = sess.run([D_solver, D_loss1], feed_dict={M: M_mb, New_X: New_X_mb, H: H_mb})
-    _, G_loss_curr, MSE_train_loss_curr, MSE_test_loss_curr = sess.run([G_solver, G_loss1, MSE_train_loss, MSE_test_loss],feed_dict={X: X_mb, M: M_mb, New_X: New_X_mb, H: H_mb})
-    train_loss_curr.append(MSE_train_loss_curr)
-    test_loss_curr.append(MSE_test_loss_curr)
-    # %% Intermediate Losses
-    if it % 10000 == 0:
-        print('Iter: {}'.format(it))
-        print('Train_loss: {:.4}'.format(np.sqrt(MSE_train_loss_curr)))
-        print('Test_loss: {:.4}'.format(np.sqrt(MSE_test_loss_curr)))
-        print()
 
 saver = tf.train.Saver()
 saver.save(sess, "./model/gain_uce2.ckpt")
