@@ -1,2 +1,2 @@
-model_checkpoint_path: "gain_fd_reduced.ckpt"
-all_model_checkpoint_paths: "gain_fd_reduced.ckpt"
+model_checkpoint_path: "gain_fd_reduced2.ckpt"
+all_model_checkpoint_paths: "gain_fd_reduced2.ckpt"
