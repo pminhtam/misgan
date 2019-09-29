@@ -112,8 +112,7 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
 
     train_loss_curr = []
     test_loss_curr = []
-    # for it in range(cf.gain_iter):
-    for it in range(1):
+    for it in range(cf.gain_iter):
         # %% Inputs
         for ii in range(int(Train_No / mb_size)):
             mb_idx = [i for i in range(ii * mb_size, (ii + 1) * mb_size)]
