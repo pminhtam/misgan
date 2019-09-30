@@ -25,7 +25,10 @@ Dim,Train_No,trainX,trainM = Data_Generate(Data)
 X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
 
 # Sessions
-sess = tf.Session()
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.3)
+
+sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+# sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 np.random.seed(cf.gain_seed)
