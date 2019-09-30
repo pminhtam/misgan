@@ -12,12 +12,11 @@ alpha = 10
 train_rate = 1.0
 
 
-data_file = "lineitem.tbl.8"
-Data = np.loadtxt(data_file, delimiter="|",skiprows=1,usecols = (0, 1, 2, 4, 5))[-cf.num_row:,:]
+data_file = "uce-results-by-school-2011-2015.csv"
+Data = np.genfromtxt(data_file, delimiter=",",skip_header=1,usecols = (3, 6, 7, 15, 22), filling_values=0)[:cf.num_row,:]
 # print(np.array([Data[:,0]+Data[:,1]]).T)
 Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
 Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
-
 
 print(Data.shape)
 
@@ -30,14 +29,14 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 saver = tf.train.Saver()
-saver.restore(sess, "./model/gain_h2.ckpt")
+saver.restore(sess, "./model/gain_uce2.ckpt")
 
 
 
 Missing0 = np.ones((Train_No,Dim))
 
-Missing0[:,0] = 0
-Missing0[:,1] = 0
+Missing0[:,2] = 0
+Missing0[:,3] = 0
 Missing0[:,4] = 0
 Missing0[:,5] = 0
 Missing0[:,6] = 0
