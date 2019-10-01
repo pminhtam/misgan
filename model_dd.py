@@ -15,13 +15,13 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
         input_dim = n_labels
         self.main = nn.Sequential(
-            nn.Linear(input_dim, 1024),
+            nn.Linear(input_dim, 128),
             nn.ReLU(),
-            nn.Linear(1024, 512),
+            nn.Linear(128, 64),
             nn.ReLU(),
-            nn.Linear(512, 256),
+            nn.Linear(64, 32),
             nn.ReLU(),
-            nn.Linear(256, 1),
+            nn.Linear(32, 1),
         )
 
     def forward(self, input):
@@ -67,13 +67,13 @@ class Generator_Imputer(nn.Module):
         input_dim = n_labels
         # Note: without branches
         self.main = nn.Sequential(
-            nn.Linear(input_dim, 512),
+            nn.Linear(input_dim, 64),
             nn.ReLU(),
-            nn.Linear(512, 512),
+            nn.Linear(64, 128),
             nn.ReLU(),
-            nn.Linear(512, 512),
+            nn.Linear(128, 64),
             nn.ReLU(),
-            nn.Linear(512, input_dim),
+            nn.Linear(64, input_dim),
             # Note: performed better without Tanh activation
             # nn.Tanh(), #
         )

@@ -46,7 +46,7 @@ def train(data):
         data.suff()
         data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
                              drop_last=True)
-        for real_data, real_mask, origin_data, _ in data_loader:
+        for _, real_mask, real_data, _ in data_loader:
             for _ in range(n_iter_d):
             # for real_data, real_mask, origin_data, _ in data_loader:
             #     real_data, real_mask, origin_data, _ = next(iter(data_loader))
