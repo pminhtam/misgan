@@ -75,7 +75,7 @@ class Generator_Imputer(nn.Module):
             nn.ReLU(),
             nn.Linear(64, input_dim),
             # Note: performed better without Tanh activation
-            # nn.Tanh(), #
+            nn.Sigmoid()
         )
 
     def forward(self, input, m):
