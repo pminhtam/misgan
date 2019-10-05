@@ -1,271 +1,42 @@
 WARNING: Logging before flag parsing goes to stderr.
-W0928 12:59:36.002131 140135636195136 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:53: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+W1004 03:02:13.370711 140661220652864 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:53: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
 
-W0928 12:59:36.079975 140135636195136 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:9: The name tf.random_normal is deprecated. Please use tf.random.normal instead.
+W1004 03:02:13.387983 140661220652864 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:9: The name tf.random_normal is deprecated. Please use tf.random.normal instead.
 
-W0928 12:59:36.189242 140135636195136 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:93: The name tf.log is deprecated. Please use tf.math.log instead.
+W1004 03:02:13.437311 140661220652864 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:93: The name tf.log is deprecated. Please use tf.math.log instead.
 
-W0928 12:59:36.211149 140135636195136 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:103: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+W1004 03:02:13.455729 140661220652864 deprecation_wrapper.py:119] From /net/bigdata/home/bigdata/thomas/tam/misgan/model_gain.py:103: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
 
-W0928 12:59:36.591009 140135636195136 deprecation.py:323] From /home/bigdata/thomas/vinh/anaconda3/lib/python3.7/site-packages/tensorflow/python/ops/math_grad.py:1205: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+W1004 03:02:13.598109 140661220652864 deprecation.py:323] From /home/bigdata/thomas/vinh/anaconda3/lib/python3.7/site-packages/tensorflow/python/ops/math_grad.py:1205: add_dispatch_support.<locals>.wrapper (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
 Instructions for updating:
 Use tf.where in 2.0, which has the same broadcast rule as np.where
-W0928 12:59:36.877365 140135636195136 deprecation_wrapper.py:119] From gain_tpc_h2.py:27: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+W1004 03:02:13.780382 140661220652864 deprecation_wrapper.py:119] From gain_tpc_h2.py:28: The name tf.GPUOptions is deprecated. Please use tf.compat.v1.GPUOptions instead.
 
-2019-09-28 12:59:36.878657: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcuda.so.1
-2019-09-28 12:59:36.889048: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
+W1004 03:02:13.780545 140661220652864 deprecation_wrapper.py:119] From gain_tpc_h2.py:30: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+
+2019-10-04 03:02:13.780727: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2019-10-04 03:02:13.787183: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3792520000 Hz
+2019-10-04 03:02:13.788301: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5604fdcdc640 executing computations on platform Host. Devices:
+2019-10-04 03:02:13.788356: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): <undefined>, <undefined>
+2019-10-04 03:02:13.789292: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcuda.so.1
+2019-10-04 03:02:14.104017: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
 name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.683
 pciBusID: 0000:0a:00.0
-2019-09-28 12:59:36.889154: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:36.889868: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 1 with properties: 
-name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.683
-pciBusID: 0000:41:00.0
-2019-09-28 12:59:36.890176: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
-2019-09-28 12:59:36.891356: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
-2019-09-28 12:59:36.892605: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
-2019-09-28 12:59:36.892873: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
-2019-09-28 12:59:36.894252: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
-2019-09-28 12:59:36.895436: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
-2019-09-28 12:59:36.898658: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
-2019-09-28 12:59:36.899866: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:36.901454: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:36.902194: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0, 1
-2019-09-28 12:59:36.902623: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
-2019-09-28 12:59:36.910665: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3792520000 Hz
-2019-09-28 12:59:36.912291: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55d87ede6e00 executing computations on platform Host. Devices:
-2019-09-28 12:59:36.912355: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): <undefined>, <undefined>
-2019-09-28 12:59:37.185230: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 0 with properties: 
-name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.683
-pciBusID: 0000:0a:00.0
-2019-09-28 12:59:37.185310: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:37.185958: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1640] Found device 1 with properties: 
-name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.683
-pciBusID: 0000:41:00.0
-2019-09-28 12:59:37.186009: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
-2019-09-28 12:59:37.186021: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
-2019-09-28 12:59:37.186031: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
-2019-09-28 12:59:37.186041: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
-2019-09-28 12:59:37.186052: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
-2019-09-28 12:59:37.186061: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
-2019-09-28 12:59:37.186071: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
-2019-09-28 12:59:37.187000: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:37.188543: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:37.189190: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0, 1
-2019-09-28 12:59:37.189245: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
-2019-09-28 12:59:37.191212: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1181] Device interconnect StreamExecutor with strength 1 edge matrix:
-2019-09-28 12:59:37.191228: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1187]      0 1 
-2019-09-28 12:59:37.191237: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 0:   N Y 
-2019-09-28 12:59:37.191242: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 1:   Y N 
-2019-09-28 12:59:37.192403: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:37.194901: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 8781 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:0a:00.0, compute capability: 6.1)
-2019-09-28 12:59:37.220909: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:37.221715: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:1005] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
-2019-09-28 12:59:37.222379: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 205 MB memory) -> physical GPU (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:41:00.0, compute capability: 6.1)
-2019-09-28 12:59:37.251826: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55d87fc7a0e0 executing computations on platform CUDA. Devices:
-2019-09-28 12:59:37.251883: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): GeForce GTX 1080 Ti, Compute Capability 6.1
-2019-09-28 12:59:37.251889: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (1): GeForce GTX 1080 Ti, Compute Capability 6.1
-W0928 12:59:37.254056 140135636195136 deprecation_wrapper.py:119] From gain_tpc_h2.py:28: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.
-
-2019-09-28 12:59:38.461867: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
-W0928 14:01:24.051329 140135636195136 deprecation_wrapper.py:119] From gain_tpc_h2.py:56: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
-
-Iter: 0
-Train_loss: 0.3915
-Test_loss: 0.3779
-
-Iter: 10000
-Train_loss: 0.05175
-Test_loss: 0.1943
-
-Iter: 20000
-Train_loss: 0.05443
-Test_loss: 0.1825
-
-Iter: 30000
-Train_loss: 0.05253
-Test_loss: 0.222
-
-Iter: 40000
-Train_loss: 0.04826
-Test_loss: 0.1737
-
-Iter: 50000
-Train_loss: 0.04659
-Test_loss: 0.2003
-
-Iter: 60000
-Train_loss: 0.04624
-Test_loss: 0.2446
-
-Iter: 70000
-Train_loss: 0.05224
-Test_loss: 0.1855
-
-Iter: 80000
-Train_loss: 0.04388
-Test_loss: 0.1871
-
-Iter: 90000
-Train_loss: 0.04727
-Test_loss: 0.1972
-
-Iter: 100000
-Train_loss: 0.04316
-Test_loss: 0.2105
-
-Iter: 110000
-Train_loss: 0.0465
-Test_loss: 0.2105
-
-Iter: 120000
-Train_loss: 0.04253
-Test_loss: 0.1771
-
-Iter: 130000
-Train_loss: 0.04538
-Test_loss: 0.1946
-
-Iter: 140000
-Train_loss: 0.04409
-Test_loss: 0.218
-
-Iter: 150000
-Train_loss: 0.04414
-Test_loss: 0.2049
-
-Iter: 160000
-Train_loss: 0.04565
-Test_loss: 0.1791
-
-Iter: 170000
-Train_loss: 0.04211
-Test_loss: 0.2079
-
-Iter: 180000
-Train_loss: 0.04474
-Test_loss: 0.2094
-
-Iter: 190000
-Train_loss: 0.04597
-Test_loss: 0.199
-
-Iter: 200000
-Train_loss: 0.04339
-Test_loss: 0.1771
-
-Iter: 210000
-Train_loss: 0.04649
-Test_loss: 0.2171
-
-Iter: 220000
-Train_loss: 0.0432
-Test_loss: 0.2384
-
-Iter: 230000
-Train_loss: 0.04571
-Test_loss: 0.188
-
-Iter: 240000
-Train_loss: 0.0447
-Test_loss: 0.1816
-
-Iter: 250000
-Train_loss: 0.04667
-Test_loss: 0.202
-
-Iter: 260000
-Train_loss: 0.04359
-Test_loss: 0.1941
-
-Iter: 270000
-Train_loss: 0.04008
-Test_loss: 0.2118
-
-Iter: 280000
-Train_loss: 0.04257
-Test_loss: 0.2026
-
-Iter: 290000
-Train_loss: 0.04433
-Test_loss: 0.1827
-
-Iter: 300000
-Train_loss: 0.04541
-Test_loss: 0.2051
-
-Iter: 310000
-Train_loss: 0.0452
-Test_loss: 0.2231
-
-Iter: 320000
-Train_loss: 0.04347
-Test_loss: 0.2058
-
-Iter: 330000
-Train_loss: 0.04171
-Test_loss: 0.1948
-
-Iter: 340000
-Train_loss: 0.04367
-Test_loss: 0.2115
-
-Iter: 350000
-Train_loss: 0.04372
-Test_loss: 0.2001
-
-Iter: 360000
-Train_loss: 0.04319
-Test_loss: 0.2302
-
-Iter: 370000
-Train_loss: 0.04274
-Test_loss: 0.1671
-
-Iter: 380000
-Train_loss: 0.04801
-Test_loss: 0.2207
-
-Iter: 390000
-Train_loss: 0.04609
-Test_loss: 0.2248
-
-Iter: 400000
-Train_loss: 0.04552
-Test_loss: 0.2209
-
-Iter: 410000
-Train_loss: 0.04991
-Test_loss: 0.2002
-
-Iter: 420000
-Train_loss: 0.04457
-Test_loss: 0.226
-
-Iter: 430000
-Train_loss: 0.04292
-Test_loss: 0.1652
-
-Iter: 440000
-Train_loss: 0.0445
-Test_loss: 0.2125
-
-Iter: 450000
-Train_loss: 0.04462
-Test_loss: 0.2148
-
-Iter: 460000
-Train_loss: 0.04413
-Test_loss: 0.1963
-
-Iter: 470000
-Train_loss: 0.04755
-Test_loss: 0.1941
-
-Iter: 480000
-Train_loss: 0.04369
-Test_loss: 0.2089
-
-Iter: 490000
-Train_loss: 0.04521
-Test_loss: 0.2344
+2019-10-04 03:02:14.104302: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2019-10-04 03:02:14.105314: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+2019-10-04 03:02:14.106440: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcufft.so.10.0
+2019-10-04 03:02:14.106693: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcurand.so.10.0
+2019-10-04 03:02:14.107903: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusolver.so.10.0
+2019-10-04 03:02:14.108920: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcusparse.so.10.0
+2019-10-04 03:02:14.111735: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudnn.so.7
+2019-10-04 03:02:14.114513: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1763] Adding visible gpu devices: 0
+2019-10-04 03:02:14.114569: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcudart.so.10.0
+2019-10-04 03:02:14.186215: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1181] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-10-04 03:02:14.186256: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1187]      0 
+2019-10-04 03:02:14.186270: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1200] 0:   N 
+2019-10-04 03:02:14.189809: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1326] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 3353 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:0a:00.0, compute capability: 6.1)
+2019-10-04 03:02:14.191454: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5604fe86f150 executing computations on platform CUDA. Devices:
+2019-10-04 03:02:14.191482: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): GeForce GTX 1080 Ti, Compute Capability 6.1
+2019-10-04 03:02:15.086015: I tensorflow/stream_executor/platform/default/dso_loader.cc:42] Successfully opened dynamic library libcublas.so.10.0
+W1004 04:16:01.748256 140661220652864 deprecation_wrapper.py:119] From gain_tpc_h2.py:39: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
 
