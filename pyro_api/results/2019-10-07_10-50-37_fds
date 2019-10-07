@@ -1,0 +1,6 @@
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"E"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"D"}}
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"C"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"G"}}
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"F"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"B"}}
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"E"}}
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"G"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"C"}}
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"B"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"F"}}
