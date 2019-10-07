@@ -17,15 +17,15 @@ Data = np.loadtxt(data_file, delimiter="|",skiprows=1,usecols = (0, 1, 2, 4, 5))
 # print(np.array([Data[:,0]+Data[:,1]]).T)
 
 Data = (Data - np.max(np.abs(Data),axis = 0)) / (np.max(np.abs(Data),axis = 0)+ 1e-10 - np.min(np.abs(Data),axis = 0))
-print(Data[0])
+# print(Data[0])
 Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
 Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
 # Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
 # Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
-print(trainX[0])
-"""
+# print(trainX[0])
+
 X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
 
 # Sessions
@@ -49,4 +49,3 @@ plt.plot(train_loss_curr)
 plt.subplot(2, 1, 2)
 plt.plot(test_loss_curr)
 plt.savefig("./img/"+ data_file + "_gain.jpg")
-"""
