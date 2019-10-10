@@ -16,8 +16,8 @@ Data = np.loadtxt("data/" +data_file, delimiter="|",skiprows=1,usecols = (1, 2,3
 # print(Data[0])
 Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
 Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
-Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
-Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
+# Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
+# Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
 # print(trainX[0])
