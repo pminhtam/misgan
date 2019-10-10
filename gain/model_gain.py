@@ -106,7 +106,7 @@ def make_model(Dim,alpha = 10):
 
 def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,trainM,sess):
     # %% Start Iterations
-    mb_size = 1024
+    mb_size = 4096
     p_miss = 0.2
     p_hint = 0.9
 
@@ -114,6 +114,7 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
     test_loss_curr = []
     for it in range(cf.gain_iter):
         # %% Inputs
+        # print(it)
         for ii in range(int(Train_No / mb_size)):
             mb_idx = [i for i in range(ii * mb_size, (ii + 1) * mb_size)]
             # mb_idx = sample_idx(Train_No, mb_size)

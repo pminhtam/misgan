@@ -31,7 +31,7 @@ train_loss_curr,test_loss_curr = train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_los
 
 
 saver = tf.train.Saver()
-saver.save(sess, "./model/gain_dat4.ckpt")
+saver.save(sess, "./model/gain_data4.ckpt")
 
 import matplotlib.pyplot as plt
 plt.subplot(2, 1, 1)
