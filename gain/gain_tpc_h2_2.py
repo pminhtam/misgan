@@ -10,10 +10,10 @@ train_rate = 1.0
 
 
 data_file = "lineitem.tbl.8"
-Data = np.loadtxt("data/" +data_file, delimiter="|",skiprows=1,usecols = (0, 1, 2, 4, 5))[:cf.num_row,:]
+Data = np.loadtxt("data/" +data_file, delimiter="|",skiprows=1,usecols = (1, 2,3, 4, 5))[:cf.num_row,:]
 # print(np.array([Data[:,0]+Data[:,1]]).T)
-# Data = (Data - np.min(np.abs(Data),axis = 0)) / (np.max(np.abs(Data),axis = 0)+ 1e-10 - np.min(np.abs(Data),axis = 0))
 
+# print(Data[0])
 Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
 Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
 # Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)

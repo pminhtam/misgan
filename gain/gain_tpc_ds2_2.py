@@ -12,12 +12,11 @@ train_rate = 1.0
 data_file = "store_returns.dat"
 Data = np.genfromtxt("data/" +data_file, delimiter="|",skip_header=1,usecols = (0,1,2,3,4,5), filling_values=0)[:cf.num_row,:]
 # print(np.array([Data[:,0]+Data[:,1]]).T)
-# Data = (Data - np.min(np.abs(Data),axis = 0)) / (np.max(np.abs(Data),axis = 0)+ 1e-10 - np.min(np.abs(Data),axis = 0))
 
-Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
-Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
-Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
-Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
+Data = np.append(Data,np.array([Data[:,0]+Data[:,4]]).T,1)
+Data = np.append(Data,np.array([Data[:,3]+Data[:,5]]).T,1)
+# Data = np.append(Data,np.array([Data[:,1]*Data[:,2]]).T,1)
+# Data = np.append(Data,np.array([Data[:,3]*Data[:,5]]).T,1)
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
 
