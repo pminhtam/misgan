@@ -1,2 +1,2 @@
-model_checkpoint_path: "gain_ds2.ckpt"
-all_model_checkpoint_paths: "gain_ds2.ckpt"
+model_checkpoint_path: "gain_data6.ckpt"
+all_model_checkpoint_paths: "gain_data6.ckpt"

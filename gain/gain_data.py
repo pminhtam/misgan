@@ -9,8 +9,8 @@ alpha = 10
 train_rate = 1.0
 
 
-data_file = "data5.csv"
-Data = np.loadtxt("./data/" + data_file, delimiter=",",usecols = (0,1,2))[:cf.num_row,:]
+data_file = "data6.csv"
+Data = np.loadtxt("../data/" + data_file, delimiter=",")[:cf.num_row,:]
 
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
@@ -32,11 +32,11 @@ train_loss_curr,test_loss_curr = train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_los
 
 
 saver = tf.train.Saver()
-saver.save(sess, "./model/gain_data5.ckpt")
+saver.save(sess, "../model/gain_data6.ckpt")
 
 import matplotlib.pyplot as plt
 plt.subplot(2, 1, 1)
 plt.plot(train_loss_curr)
 plt.subplot(2, 1, 2)
 plt.plot(test_loss_curr)
-plt.savefig("./img/"+ data_file + "_gain.jpg")
+plt.savefig("../img/"+ data_file + "_gain.jpg")

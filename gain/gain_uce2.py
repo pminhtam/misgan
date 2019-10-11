@@ -10,7 +10,7 @@ train_rate = 1.0
 
 
 data_file = "uce-results-by-school-2011-2015.csv"
-Data = np.genfromtxt("data/" +data_file, delimiter=",",skip_header=1,usecols = (5, 6, 7, 14, 22), filling_values=0)[:cf.num_row,:]
+Data = np.genfromtxt("data/" +data_file, delimiter=",",skip_header=1,usecols = (5, 6, 7, 14, 22), filling_values=0)[:8192,:]
 # print(np.array([Data[:,0]+Data[:,1]]).T)
 
 Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
