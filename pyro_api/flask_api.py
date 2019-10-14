@@ -7,15 +7,14 @@ from gain.model_gain import *
 app = Flask(__name__)
 
 column  = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10,'L':11,'M':12,'N':13,'O':14}
-data_file = "../uce-results-by-school-2011-2015.csv"
-Data = np.genfromtxt(data_file, delimiter=",",skip_header=1,usecols = (3, 6, 7, 15, 22,14,17,19,21,22,23), filling_values=0)[:cf.num_row,:]
+data_file = "uce-results-by-school-2011-2015.csv"
+Data = np.genfromtxt("./data/" +data_file, delimiter=",",skip_header=1,usecols = (5, 6, 7, 14, 22), filling_values=0)[8192:,:]
 # print(np.array([Data[:,0]+Data[:,1]]).T)
-Data = (Data - np.min(np.abs(Data),axis = 0)) / (np.max(np.abs(Data),axis = 0)+ 1e-10 - np.min(np.abs(Data),axis = 0))
 
 Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
 Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
-Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
-Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
+# Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
+# Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
 
 # Data.shape
 
@@ -26,7 +25,7 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 saver = tf.train.Saver()
-saver.restore(sess, "../model/gain_uce2.ckpt")
+saver.restore(sess, "./model/gain_uce2.ckpt")
 vt_list = []
 vp_list = []
 @app.route("/")
