@@ -7,7 +7,7 @@ def Data_Generate(Data ,p_miss = 0.2):
     # Normalization (0 to 1)
     data_max  = np.max(np.abs(Data),axis = 0)
     data_min = np.min(np.abs(Data),axis = 0)
-
+    print(data_max)
     Data = (Data-data_min) / (data_max-data_min + 1e-10)
 
     p_miss_vec = p_miss * np.ones((Dim, 1))

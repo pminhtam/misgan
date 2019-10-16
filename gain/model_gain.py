@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import cf
+from tqdm import tqdm
 
 # 1. Xavier Initialization Definition
 def xavier_init(size):
@@ -38,6 +39,7 @@ def discriminator(new_x, h,D_W1,D_W2,D_W3,D_b1,D_b2,D_b3):
 # Random sample generator for Z
 def sample_Z(m, n):
     return np.random.uniform(0., 0.01, size = [m, n])
+    # return np.random.uniform(0., 0.5, size = [m, n])
 
 # # Mini-batch generation
 def sample_idx(m, n):
@@ -104,15 +106,14 @@ def make_model(Dim,alpha = 10):
     G_solver = tf.train.AdamOptimizer().minimize(G_loss, var_list=theta_G)
     return X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample
 
-def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,trainM,sess):
+def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,trainM,sess,gain_iter,batch_size,p_hint):
     # %% Start Iterations
-    mb_size = 4096
-    p_miss = 0.2
-    p_hint = 0.9
+    mb_size = batch_size
+    p_hint = p_hint
 
     train_loss_curr = []
     test_loss_curr = []
-    for it in range(cf.gain_iter):
+    for it in tqdm(range(gain_iter)):
         # %% Inputs
         # print(it)
         np.random.shuffle(trainX)
@@ -132,6 +133,6 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
             _, G_loss_curr, MSE_train_loss_curr, MSE_test_loss_curr = sess.run(
                 [G_solver, G_loss1, MSE_train_loss, MSE_test_loss],
                 feed_dict={X: X_mb, M: M_mb, New_X: New_X_mb, H: H_mb})
-            train_loss_curr.append(MSE_train_loss_curr)
-            test_loss_curr.append(MSE_test_loss_curr)
+            # train_loss_curr.append(MSE_train_loss_curr)
+            # test_loss_curr.append(MSE_test_loss_curr)
     return train_loss_curr,test_loss_curr
