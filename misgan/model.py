@@ -3,8 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.autograd import grad
 from torch.utils.data import DataLoader
-from torch.utils.data import Dataset
-from torchvision import datasets, transforms
+
 import numpy as np
 
 use_cuda = torch.cuda.is_available()
@@ -174,3 +173,229 @@ def cal_loss_MSER(imputer, data_loader,batch_size,output_dim):
         origin_data_mask.extend(origin_data * (1 - masks))
 
     return imputed_data_mask, origin_data_mask
+
+
+def train(data,batch_size,nz,alpha,beta,epoch_1,epoch_2,lrate1,imputer_lrate):
+
+    data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
+                             drop_last=True)
+
+
+    n_critic = 5
+    # alpha = .2
+    output_dim = data.n_labels
+    # batch_size = 1024
+
+    data_gen = FCDataGenerator(nz, output_dim).to(device)
+    mask_gen = FCMaskGenerator(nz, output_dim).to(device)
+
+    data_critic = FCCritic(output_dim).to(device)
+    mask_critic = FCCritic(output_dim).to(device)
+
+    data_noise = torch.empty(batch_size, nz, device=device)
+    mask_noise = torch.empty(batch_size, nz, device=device)
+
+    # lrate1 = 1e-4
+    data_gen_optimizer = optim.Adam(
+        data_gen.parameters(), lr=lrate1, betas=(.5, .9))
+    mask_gen_optimizer = optim.Adam(
+        mask_gen.parameters(), lr=lrate1, betas=(.5, .9))
+
+    data_critic_optimizer = optim.Adam(
+        data_critic.parameters(), lr=lrate1, betas=(.5, .9))
+    mask_critic_optimizer = optim.Adam(
+        mask_critic.parameters(), lr=lrate1, betas=(.5, .9))
+
+    update_data_critic = CriticUpdater(
+        data_critic, data_critic_optimizer, batch_size)
+    update_mask_critic = CriticUpdater(
+        mask_critic, mask_critic_optimizer, batch_size)
+
+    """### Training MisGAN"""
+
+    # data_gen.load_state_dict(torch.load('./data_gen_my_data3_0.2.pt'))
+    # mask_gen.load_state_dict(torch.load('./mask_gen_my_data3_0.2.pt'))
+
+    plot_interval = 500
+    critic_updates = 0
+
+    for epoch in range(epoch_1):
+    # for epoch in range(1):
+        for real_data, real_mask, origin_data, _ in data_loader:
+
+            real_data = real_data.float().to(device)
+            real_mask = real_mask.float().to(device)
+
+            # Update discriminators' parameters
+            data_noise.normal_()
+            mask_noise.normal_()
+
+            fake_data = data_gen(data_noise)
+            fake_mask = mask_gen(mask_noise)
+
+            masked_fake_data = mask_data(fake_data, fake_mask)
+            masked_real_data = mask_data(real_data, real_mask)
+
+            update_data_critic(masked_real_data, masked_fake_data)
+            update_mask_critic(real_mask, fake_mask)
+
+            critic_updates += 1
+
+            if critic_updates == n_critic:
+                critic_updates = 0
+
+                # Update generators' parameters
+                for p in data_critic.parameters():
+                    p.requires_grad_(False)
+                for p in mask_critic.parameters():
+                    p.requires_grad_(False)
+
+                data_gen.zero_grad()
+                mask_gen.zero_grad()
+
+                data_noise.normal_()
+                mask_noise.normal_()
+
+                fake_data = data_gen(data_noise)
+                fake_mask = mask_gen(mask_noise)
+                masked_fake_data = mask_data(fake_data, fake_mask)
+
+                data_loss = -data_critic(masked_fake_data).mean()
+                data_loss.backward(retain_graph=True)
+                data_gen_optimizer.step()
+
+                mask_loss = -mask_critic(fake_mask).mean()
+                (mask_loss + data_loss * alpha).backward()
+                mask_gen_optimizer.step()
+
+                for p in data_critic.parameters():
+                    p.requires_grad_(True)
+                for p in mask_critic.parameters():
+                    p.requires_grad_(True)
+
+        if plot_interval > 0 and (epoch + 1) % plot_interval == 0:
+            # Although it makes no difference setting eval() in this example,
+            # you will need those if you are going to use modules such as
+            # batch normalization or dropout in the generators.
+            data_gen.eval()
+            mask_gen.eval()
+
+            with torch.no_grad():
+                print('Epoch:', epoch)
+
+                data_noise.normal_()
+                data_samples = data_gen(data_noise)
+                print(data_samples[0])
+
+                mask_noise.normal_()
+                mask_samples = mask_gen(mask_noise)
+                print(mask_samples[0])
+
+            data_gen.train()
+            mask_gen.train()
+
+    imputer = Imputer(output_dim).to(device)
+    impu_critic = FCCritic(output_dim).to(device)
+    impu_noise = torch.empty(batch_size, output_dim, device=device)
+
+    # imputer_lrate = 2e-4
+    imputer_optimizer = optim.Adam(
+        imputer.parameters(), lr=imputer_lrate, betas=(.5, .9))
+    impu_critic_optimizer = optim.Adam(
+        impu_critic.parameters(), lr=imputer_lrate, betas=(.5, .9))
+    update_impu_critic = CriticUpdater(
+        impu_critic, impu_critic_optimizer, batch_size)
+
+    """### Training MisGAN imputer"""
+
+    # alpha = .2
+    # beta = .2
+    plot_interval = 500
+    critic_updates = 0
+    loss = []
+    for epoch in range(epoch_2):
+    # for epoch in range(1):
+        #     print("Epoch %d " % epoch)
+        data.suff()
+        data_loader = DataLoader(data, batch_size=batch_size, shuffle=True,
+                                 drop_last=True)
+        for real_data, real_mask, origin_data, index in data_loader:
+
+            real_data = real_data.float().to(device)
+            real_mask = real_mask.float().to(device)
+
+            masked_real_data = mask_data(real_data, real_mask)
+
+            # Update discriminators' parameters
+            data_noise.normal_()
+            fake_data = data_gen(data_noise)
+
+            mask_noise.normal_()
+            fake_mask = mask_gen(mask_noise)
+            masked_fake_data = mask_data(fake_data, fake_mask)
+
+            impu_noise.uniform_()
+            imputed_data = imputer(real_data, real_mask, impu_noise)
+
+            update_data_critic(masked_real_data, masked_fake_data)
+            update_mask_critic(real_mask, fake_mask)
+            update_impu_critic(fake_data, imputed_data)
+
+            critic_updates += 1
+
+            if critic_updates == n_critic:
+                critic_updates = 0
+
+                # Update generators' parameters
+                for p in data_critic.parameters():
+                    p.requires_grad_(False)
+                for p in mask_critic.parameters():
+                    p.requires_grad_(False)
+                for p in impu_critic.parameters():
+                    p.requires_grad_(False)
+
+                data_noise.normal_()
+                fake_data = data_gen(data_noise)
+
+                mask_noise.normal_()
+                fake_mask = mask_gen(mask_noise)
+                masked_fake_data = mask_data(fake_data, fake_mask)
+
+                impu_noise.uniform_()
+                imputed_data = imputer(real_data, real_mask, impu_noise)
+
+                data_loss = -data_critic(masked_fake_data).mean()
+                mask_loss = -mask_critic(fake_mask).mean()
+                impu_loss = -impu_critic(imputed_data).mean()
+
+                mask_gen.zero_grad()
+                (mask_loss + data_loss * alpha).backward(retain_graph=True)
+                mask_gen_optimizer.step()
+
+                data_gen.zero_grad()
+                (data_loss + impu_loss * beta).backward(retain_graph=True)
+                data_gen_optimizer.step()
+
+                imputer.zero_grad()
+                impu_loss.backward()
+                imputer_optimizer.step()
+
+                for p in data_critic.parameters():
+                    p.requires_grad_(True)
+                for p in mask_critic.parameters():
+                    p.requires_grad_(True)
+                for p in impu_critic.parameters():
+                    p.requires_grad_(True)
+
+        if plot_interval > 0 and (epoch + 1) % plot_interval == 0:
+            with torch.no_grad():
+                imputer.eval()
+
+                imputed_data_mask, origin_data_mask = cal_loss_MSER(imputer, DataLoader(data,
+                                                                                        batch_size=1,
+                                                                                        shuffle=False, drop_last=True),1, output_dim)
+                # print(np.sum(np.square(np.subtract(imputed_data_mask,origin_data_mask)),axis=1).mean())
+                loss.append(np.sum(np.square(np.subtract(imputed_data_mask, origin_data_mask)), axis=1).mean())
+                imputer.train()
+    return data_gen,mask_gen,imputer,loss
+
