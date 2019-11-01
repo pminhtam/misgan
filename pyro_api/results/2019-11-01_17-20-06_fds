@@ -1,0 +1,2 @@
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"A"},{"tableIdentifier":"data.csv","columnIdentifier":"B"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"C"}}
+{"type":"FunctionalDependency","determinant":{"columnIdentifiers":[{"tableIdentifier":"data.csv","columnIdentifier":"D"},{"tableIdentifier":"data.csv","columnIdentifier":"E"}]},"dependant":{"tableIdentifier":"data.csv","columnIdentifier":"F"}}

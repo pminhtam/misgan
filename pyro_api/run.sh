@@ -1,0 +1,1 @@
+java -cp metanome-cli-1.1.0.jar:pyro-distro-1.0-SNAPSHOT-distro_dat.jar de.metanome.cli.App --algorithm de.hpi.isg.pyro.algorithms.Pyro --files data.csv --file-key inputFile --algorithm-config maxFdError:0.1 maxUccError:0.001 --separator , --header

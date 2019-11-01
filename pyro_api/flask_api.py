@@ -7,16 +7,10 @@ from gain.model_gain import *
 app = Flask(__name__)
 
 column  = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10,'L':11,'M':12,'N':13,'O':14}
-data_file = "uce-results-by-school-2011-2015.csv"
-Data = np.genfromtxt("./data/" +data_file, delimiter=",",skip_header=1,usecols = (5, 6, 7, 14, 22), filling_values=0)[8192:,:]
-# print(np.array([Data[:,0]+Data[:,1]]).T)
+data_file = "data4_test.csv"
+Data = np.loadtxt("./data/" + data_file, delimiter=",")
 
-Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
-Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
-# Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
-# Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
 
-# Data.shape
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
 X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
@@ -25,7 +19,7 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 saver = tf.train.Saver()
-saver.restore(sess, "./model/gain_uce2.ckpt")
+saver.restore(sess, "./model/gain_data4.ckpt")
 vt_list = []
 vp_list = []
 @app.route("/")
