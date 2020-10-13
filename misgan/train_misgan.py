@@ -5,8 +5,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--data-file",type=str,default = "data/uce_train.csv",help="path to data file")
-parser.add_argument("--save-path",type=str,default="./model/uce2",help="path to save model")
+parser.add_argument("--data-file",type=str,default = "../data/data1_train.csv",help="path to data file")
+parser.add_argument("--save-path",type=str,default="../model/uce2",help="path to save model")
 parser.add_argument("--nz",type=int,default=256,help="size of Generator input vector")
 parser.add_argument("--batch-size",type=int,default=4096,help="batch size")
 parser.add_argument("--alpha",type=float,default=0.2,help="ratio weight between mask_loss and data_loss")
@@ -16,7 +16,7 @@ parser.add_argument("--epoch_2",type=int,default=5000,help="epoch of data, mask,
 parser.add_argument("--lrate1",type=float,default=1e-4,help="learning rate of data, mask  train")
 parser.add_argument("--imputer_lrate",type=float,default=2e-4,help="learning rate of data, mask, imputer  train")
 args = parser.parse_args()
-
+torch.autograd.set_detect_anomaly(True)
 
 def main():
     batch_size = args.batch_size

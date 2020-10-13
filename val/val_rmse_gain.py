@@ -9,41 +9,35 @@ alpha = 10
 train_rate = 1.0
 
 
-data_file = "data/fd-reduced-30.csv"
-Data = np.loadtxt(data_file, delimiter=",",skiprows=1,usecols = (3, 4, 5, 6, 7))[:cf.num_row,:]
-# print(np.array([Data[:,0]+Data[:,1]]).T)
-Data = (Data - np.min(np.abs(Data),axis = 0)) / (np.max(np.abs(Data),axis = 0)+ 1e-10 - np.min(np.abs(Data),axis = 0))
-
-# Data = np.append(Data,np.array([Data[:,0]+Data[:,1]]).T,1)
-# Data = np.append(Data,np.array([Data[:,2]+Data[:,3]]).T,1)
-Data = np.append(Data,np.array([Data[:,0]*Data[:,1]]).T,1)
-Data = np.append(Data,np.array([Data[:,2]*Data[:,3]]).T,1)
-
-
+data_file = "../data/data3_test.csv"
+# Data = np.loadtxt(data_file, delimiter=",",skiprows=1,usecols = (3, 4, 5, 6, 7))[:cf.num_row,:]
+Data = np.genfromtxt(data_file, delimiter=",", filling_values=0)
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
 print(trainX[0])
 
 print(Data.shape)
 
-X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
+X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,prob_masks = make_model(Dim)
 
 # Sessions
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 saver = tf.train.Saver()
-saver.restore(sess, "./model/gain_fd_reduced2.ckpt")
+saver.restore(sess, "../model/gain_data3.ckpt")
 
 
 
 Missing0 = np.ones((Train_No,Dim))
 
-Missing0[:,0] = 0
-Missing0[:,1] = 0
+# Missing0[:,0] = 0
+# Missing0[:,1] = 0
+Missing0[:,2] = 0
+Missing0[:,3] = 0
 Missing0[:,4] = 0
 Missing0[:,5] = 0
 Missing0[:,6] = 0
-# Missing0[:,7] = 0
+Missing0[:,7] = 0
 # Missing0[:,8] = 0
 # Missing0[:,9] = 0
 # Missing0[:,10] = 0
