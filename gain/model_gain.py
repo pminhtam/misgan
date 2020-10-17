@@ -230,8 +230,8 @@ def make_model(Dim,alpha = 10):
 
 def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,p_miss,sess,gain_iter,batch_size,p_hint,
     prob_masks):
-    import tensorboardX
-    import torch
+    # import tensorboardX
+    # import torch
     p_miss = 1/Dim 
     print("Init p_miss = ", p_miss)
     # %% Start Iterations
