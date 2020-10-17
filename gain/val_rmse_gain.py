@@ -43,8 +43,10 @@ def main():
 
     MSE_final,G_sample = sess.run([MSE_test_loss,G_sample], feed_dict={X: trainX, M: M_mb, New_X: New_X_mb})
 
-    # print(np.mean(np.square(np.subtract(G_sample*(1-M_mb),trainX*(1-M_mb))),axis=0))
-    # print(np.sqrt(np.mean(np.square(np.subtract(G_sample[2],G_sample[1]+G_sample[0]),axis=0))))
+    print("Re gen missing value  :",*np.mean(np.square(np.subtract(G_sample*(1-M_mb),trainX*(1-M_mb))),axis=0))
+    print("Re gen missing value  :",*np.mean(np.square(np.subtract(G_sample*M_mb,trainX*M_mb)),axis=0))
+    print("Re gen all  :",np.mean(np.square(np.subtract(G_sample,trainX)),axis=0))
+    #print(np.sqrt(np.mean(np.square(np.subtract(G_sample[2],G_sample[1]+G_sample[0])))))
     s = 0
     for i in range(len(G_sample)):
         # print(G_sample[i])
