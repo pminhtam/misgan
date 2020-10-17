@@ -7,19 +7,19 @@ from gain.model_gain import *
 app = Flask(__name__)
 
 column  = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10,'L':11,'M':12,'N':13,'O':14}
-data_file = "data4_test.csv"
+data_file = "data3_test.csv"
 Data = np.loadtxt("./data/" + data_file, delimiter=",")
 
 
 
 Dim,Train_No,trainX,trainM = Data_Generate(Data)
-X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
+X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,prob_masks = make_model(Dim)
 # Sessions
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 saver = tf.train.Saver()
-saver.restore(sess, "./model/gain_data4.ckpt")
+saver.restore(sess, "./model/gain_data3.ckpt")
 vt_list = []
 vp_list = []
 @app.route("/")

@@ -70,16 +70,16 @@ class FCCritic(nn.Module):
         self.input_dim = input_dim
         self.main = nn.Sequential(
             nn.Linear(self.input_dim, 512),
-            nn.ReLU(True),
+            nn.ReLU(False),
             nn.Linear(512, 256),
-            nn.ReLU(True),
+            nn.ReLU(False),
             nn.Linear(256, 128),
-            nn.ReLU(True),
+            nn.ReLU(False),
 
             nn.Linear(128, 64),
-            nn.ReLU(True),
+            nn.ReLU(False),
             nn.Linear(64, 32),
-            nn.ReLU(True),
+            nn.ReLU(False),
 
             nn.Linear(32, 1),
         )
@@ -262,10 +262,12 @@ def train(data,batch_size,nz,alpha,beta,epoch_1,epoch_2,lrate1,imputer_lrate):
 
                 data_loss = -data_critic(masked_fake_data).mean()
                 data_loss.backward(retain_graph=True)
-                data_gen_optimizer.step()
+
 
                 mask_loss = -mask_critic(fake_mask).mean()
                 (mask_loss + data_loss * alpha).backward()
+
+                data_gen_optimizer.step()
                 mask_gen_optimizer.step()
 
                 for p in data_critic.parameters():

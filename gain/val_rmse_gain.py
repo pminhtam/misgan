@@ -5,8 +5,8 @@ import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--data-file",type=str,default = "data/uce_test.csv",help="path to data file")
-parser.add_argument("--save-path",type=str,default="./model/gain_uce2.ckpt",help="path to save model")
+parser.add_argument("--data-file",type=str,default = "../data/data1_test.csv",help="path to data file")
+parser.add_argument("--save-path",type=str,default="../model/gain_data1.ckpt",help="path to save model")
 parser.add_argument("--mask",type=str,default="0,1",help="mask")
 args = parser.parse_args()
 
@@ -19,7 +19,7 @@ def main():
 
     Dim,Train_No,trainX,trainM = Data_Generate(Data)
 
-    X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample = make_model(Dim)
+    X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,MSE_loss_cols = make_model(Dim)
 
     # Sessions
     sess = tf.Session()

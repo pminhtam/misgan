@@ -263,10 +263,15 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
 
             Z_mb = sample_Z(mb_size, Dim)
             # M_mb = trainM[mb_idx, :]
-            M_mb = np.zeros_like(X_mb)
-            for i in range(Dim):
-                M_mb[:,i] = np.random.choice(2, size=(X_mb.shape[0],), p=[p_miss, 1-p_miss])
-
+            # M_mb = np.zeros_like(X_mb)
+            M_mb = np.ones_like(X_mb)
+            # for i in range(Dim):
+            #     M_mb[:,i] = np.random.choice(2, size=(X_mb.shape[0],), p=[p_miss, 1-p_miss])
+            for i in range(mb_size):
+                miss_pos = np.random.choice(Dim,2,replace=False)
+                for ii_pos in miss_pos:
+                    M_mb[i,ii_pos] = 0
+            # print(M_mb)
             H_mb1 = sample_M(mb_size, Dim, 1 - p_hint)
             H_mb = M_mb * H_mb1
 
