@@ -270,9 +270,9 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
             #for i in range(Dim):       # all column
             for i in [2]:               # some column
                 ## FD mask random
-                #M_mb[:,i] = np.random.choice(2, size=(X_mb.shape[0],), p=[p_miss, 1-p_miss])
+                M_mb[:,i] = np.random.choice(2, size=(X_mb.shape[0],), p=[p_miss, 1-p_miss])
                 ## FD mask total
-                M_mb[:,i] = np.zeros((X_mb.shape[0],))
+                # M_mb[:,i] = np.zeros((X_mb.shape[0],))
 
             ## N value mask random
             #miss_ori = np.ones(Dim)
