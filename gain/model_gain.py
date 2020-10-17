@@ -265,17 +265,21 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
             # M_mb = trainM[mb_idx, :]
             #M_mb = np.zeros_like(X_mb)
             M_mb = np.ones_like(X_mb)
-            #for i in range(Dim):
-            for i in [2]:
+
+            ## FD only
+            #for i in range(Dim):       # all column
+            for i in [2]:               # some column
+                ## FD mask random
                 #M_mb[:,i] = np.random.choice(2, size=(X_mb.shape[0],), p=[p_miss, 1-p_miss])
+                ## FD mask total
                 M_mb[:,i] = np.zeros((X_mb.shape[0],))
-            #print(M_mb) 
+
+            ## N value mask random
             #miss_ori = np.ones(Dim)
-            #miss_ori = np.zeros(Dim)
             #miss_pos = np.random.choice(Dim,2,replace=False)
             #miss_pos = [0,1]
             #for ii_pos in miss_pos:
-            #    miss_ori[ii_pos] = 1
+            #    miss_ori[ii_pos] = 0
             #print(miss_ori)
             #for i in range(mb_size):
             #    #M_mb[i,:] = np.random.permutation(miss_ori)
