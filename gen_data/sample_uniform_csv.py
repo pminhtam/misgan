@@ -6,9 +6,10 @@ import numpy as np
 # import matplotlib.pyplot as plt
 # Generate Population Data
 # df = pd.DataFrame(np.random.randn(10000,1)) #normal
-Data = np.genfromtxt("../gen_data/data_gamma_2_3.csv", delimiter=",", filling_values=0)
+Data = np.genfromtxt("./uniform.csv", delimiter=",", filling_values=0,dtype=float)
 
 df = pd.DataFrame(Data)
+# s_mu = [df.sample(1) for i in range(100000)]
 s_mu = df.sample(20000)
 
 # print(Data)
@@ -16,5 +17,5 @@ s_mu = df.sample(20000)
 # print(s_mu)
 ss = pd.DataFrame(s_mu)
 # print(ss)
-ss.to_csv("../gen_data/data_gamma_2_3_uniform.csv",header=False,index=False)
+ss.to_csv("./uniform_uniform.csv",header=False,index=False)
 # df.sa

@@ -6,7 +6,7 @@ import numpy as np
 # import matplotlib.pyplot as plt
 # Generate Population Data
 # df = pd.DataFrame(np.random.randn(10000,1)) #normal
-Data = np.genfromtxt("../gen_data/data_gamma_2_3.csv", delimiter=",", filling_values=0)
+Data = np.genfromtxt("../gen_data/data_gamma_1_3.csv", delimiter=",", filling_values=0,dtype=float)
 # print(Data)
 df = pd.DataFrame(Data)
 s_mu = [list(df.sample(100).median()) for i in range(20000)]
@@ -16,5 +16,5 @@ s_mu = [list(df.sample(100).median()) for i in range(20000)]
 # print(s_mu)
 ss = pd.DataFrame(s_mu)
 # print(ss)
-ss.to_csv("../gen_data/data_gamma_2_3_med.csv",header=False,index=False)
+ss.to_csv("../gen_data/data_gamma_1_3_med.csv",header=False,index=False)
 # df.sa
