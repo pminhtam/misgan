@@ -17,18 +17,18 @@ s_mu = [list(df.sample(100).mean()) for i in range(20000)]
 # print(s_mu)
 ss = pd.DataFrame(s_mu)
 
-# s = ss[2].to_numpy()
-# # print(s)
-# shape = 2
-# scale =3
-# # print(x1)
-# import matplotlib.pyplot as plt
-# import scipy.special as sps
-# count, bins, ignored = plt.hist(s, 50)
-# y = np.ones_like(bins)
-# plt.plot(bins, y, linewidth=2, color='r')
-# plt.show()
+s = ss[2].to_numpy()
+# print(s)
+shape = 2
+scale =3
+# print(x1)
+import matplotlib.pyplot as plt
+import scipy.special as sps
+count, bins, ignored = plt.hist(s, 50)
+y = np.ones_like(bins)
+plt.plot(bins, y, linewidth=2, color='r')
+plt.show()
 
 # print(ss)
-ss.to_csv("../gen_data/data_gamma_1_3_mean.csv",header=False,index=False)
+# ss.to_csv("../gen_data/data_gamma_1_3_mean.csv",header=False,index=False)
 # df.sa
