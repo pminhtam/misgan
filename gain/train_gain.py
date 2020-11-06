@@ -1,7 +1,10 @@
 from gain.data_gain import Data_Generate
 from gain.model_gain import *
 import argparse
-
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 parser = argparse.ArgumentParser()
 

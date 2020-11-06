@@ -1,4 +1,8 @@
 from gain.data_gain import Data_Generate
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 from gain.model_gain_notD import *
 import argparse
 
@@ -43,17 +47,21 @@ def main():
 
     MSE_final,G_sample = sess.run([MSE_test_loss,G_sample], feed_dict={X: trainX, M: M_mb, New_X: New_X_mb})
 
-    print("Re gen missing value  :",*np.mean(np.square(np.subtract(G_sample*(1-M_mb),trainX*(1-M_mb))),axis=0))
-    print("Re gen missing value  :",*np.mean(np.square(np.subtract(G_sample*M_mb,trainX*M_mb)),axis=0))
+    #print("Re gen missing value  :",*np.mean(np.square(np.subtract(G_sample*(1-M_mb),trainX*(1-M_mb))),axis=0))
+    #print("Re gen missing value  :",*np.mean(np.square(np.subtract(G_sample*M_mb,trainX*M_mb)),axis=0))
     print("Re gen all  :",np.mean(np.square(np.subtract(G_sample,trainX)),axis=0))
+    re_all = np.mean(np.square(np.subtract(G_sample,trainX)),axis=0)
+    with open("log_6col.txt","a+") as f:
+        # f.writelines(str(re_all[2])+ "|" + str(re_all[5])+"\n")
+        f.writelines(str(re_all[2]) + "\n")
     #print(np.sqrt(np.mean(np.square(np.subtract(G_sample[2],G_sample[1]+G_sample[0])))))
     s = 0
-    for i in range(len(G_sample)):
+    #for i in range(len(G_sample)):
         # print(G_sample[i])
         # print(G_sample[i][0], "   ",G_sample[i][1]*17, "   ", G_sample[i][2]*18 , "   " ,G_sample[i][2]*18 - G_sample[i][1]*17 -G_sample[i][0] )
         # s += np.square(G_sample[i][5]*4 - G_sample[i][4]*2 *G_sample[i][3]*2)
-        s += np.square(G_sample[i][1] - G_sample[i][0])
-    print(np.sqrt(s / (len(trainX))))
+        #s += np.square(G_sample[i][1] - G_sample[i][0])
+    #print(np.sqrt(s / (len(trainX))))
 
 
 if __name__ == "__main__":
