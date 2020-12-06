@@ -6,15 +6,19 @@ import numpy as np
 # import matplotlib.pyplot as plt
 # Generate Population Data
 # df = pd.DataFrame(np.random.randn(10000,1)) #normal
-Data = np.genfromtxt("../gen_data/data_gamma_1_3.csv", delimiter=",", filling_values=0,dtype=float)
+Data = np.genfromtxt("../gen_data/uniform_6col.csv", delimiter=",", filling_values=0,dtype=float)
 # print(Data)
 df = pd.DataFrame(Data)
-s_mu = [list(df.sample(100).median()) for i in range(20000)]
+# s_mu = [list(df.sample(100).median()) for i in range(20000)]
+
+sam_med = lambda fd_sam: list(fd_sam[fd_sam[2]==fd_sam[2].quantile(interpolation='nearest')].mean())
+s_mu = [sam_med(df.sample(100)) for i in range(20000)]
+# s_mu = df[df[2]==df[2].quantile(interpolation='nearest')]
 
 # print(Data)
 # print(df)
 # print(s_mu)
 ss = pd.DataFrame(s_mu)
 # print(ss)
-ss.to_csv("../gen_data/data_gamma_1_3_med.csv",header=False,index=False)
+ss.to_csv("../gen_data/uniform_6col_med.csv",header=False,index=False)
 # df.sa
