@@ -31,4 +31,5 @@ ss = pd.DataFrame(s_mu)
 
 # print(ss)
 ss.to_csv("../gen_data/uniform_6col_mean.csv",header=False,index=False)
+# ss.to_csv("../gen_data/data_gamma_1_3_mean.csv",header=False,index=False)
 # df.sa

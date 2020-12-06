@@ -1,17 +1,17 @@
 from gain.data_gain import Data_Generate
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import tensorflow as tf
 tf.get_logger().setLevel('ERROR')
-from gain.model_gain import *
+from gain.model_gain_notD import *
 import argparse
 
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--data-file",type=str,default = "../data/data1_test.csv",help="path to data file")
-parser.add_argument("--save-path",type=str,default="../model/gain_data1.ckpt",help="path to save model")
-parser.add_argument("--mask",type=str,default="0,1",help="mask")
+parser.add_argument("--data-file",type=str,default = "../gen_data/data_gamma_1_3.csv",help="path to data file")
+parser.add_argument("--save-path",type=str,default="./model/data_gamma_1_3.ckpt",help="path to save model")
+parser.add_argument("--mask",type=str,default="2",help="mask")
 args = parser.parse_args()
 
 
@@ -23,7 +23,7 @@ def main():
 
     Dim,Train_No,trainX,trainM = Data_Generate(Data)
 
-    X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,MSE_loss_cols = make_model(Dim)
+    X,M,H,New_X,MSE_train_loss,MSE_test_loss,G_solver,G_sample, MSE_loss_cols = make_model(Dim)
 
     # Sessions
     sess = tf.Session()
@@ -52,7 +52,8 @@ def main():
     print("Re gen all  :",np.mean(np.square(np.subtract(G_sample,trainX)),axis=0))
     re_all = np.mean(np.square(np.subtract(G_sample,trainX)),axis=0)
     with open("log_6col.txt","a+") as f:
-        f.writelines(str(re_all[2])+ "|" + str(re_all[5])+"\n")
+        # f.writelines(str(re_all[2])+ "|" + str(re_all[5])+"\n")
+        f.writelines(str(re_all[2]) + "\n")
     #print(np.sqrt(np.mean(np.square(np.subtract(G_sample[2],G_sample[1]+G_sample[0])))))
     s = 0
     #for i in range(len(G_sample)):
