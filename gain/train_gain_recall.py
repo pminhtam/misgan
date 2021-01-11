@@ -43,7 +43,8 @@ def main():
         sess.run(tf.global_variables_initializer())
         np.random.seed(cf.gain_seed)
         np.random.shuffle(trainX)
-        train_loss_curr,test_loss_curr = train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,p_miss,sess,gain_iter,batch_size,p_hint,prob_masks,maskss)
+        maskss2 = list(set(A) - set(maskss))
+        train_loss_curr,test_loss_curr = train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,p_miss,sess,gain_iter,batch_size,p_hint,prob_masks,maskss2)
 
         saver = tf.train.Saver()
         saver.save(sess, args.save_path + "".join([str(i) for i in maskss]))
