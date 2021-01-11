@@ -20,7 +20,7 @@ def main():
     np.random.seed(0)
     data_file = args.data_file
     mask = args.mask
-    remain = [int(i) for i in args.remain.split(',')]
+    remain = [int(i) for i in args.remain]
     mask = [int(i) for i in args.mask.split(',')]
     Data = np.genfromtxt(data_file, delimiter=",", filling_values=0)
 
