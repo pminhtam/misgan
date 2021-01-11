@@ -229,7 +229,7 @@ def make_model(Dim,alpha = 10):
 
 
 def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_solver,G_sample,Dim,Train_No,trainX,p_miss,sess,gain_iter,batch_size,p_hint,
-    prob_masks):
+    prob_masks,maskss=[0,1,2]):
     # import tensorboardX
     # import torch
     p_miss = 1/Dim 
@@ -268,7 +268,7 @@ def train(X,M,H,New_X,D_loss1,G_loss1,MSE_train_loss,MSE_test_loss,D_solver,G_so
 
             ## FD only
             #for i in range(Dim):       # all column
-            for i in [2]:               # some column
+            for i in maskss:               # some column
                 ## FD mask random
                 M_mb[:,i] = np.random.choice(2, size=(X_mb.shape[0],), p=[p_miss, 1-p_miss])
                 ## FD mask total
