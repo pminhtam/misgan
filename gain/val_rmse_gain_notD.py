@@ -12,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--data-file",type=str,default = "../gen_data/data_gamma_1_3.csv",help="path to data file")
 parser.add_argument("--save-path",type=str,default="./model/data_gamma_1_3.ckpt",help="path to save model")
 parser.add_argument("--mask",type=str,default="2",help="mask")
+parser.add_argument("--remain",type=str,default="",help="mask")
 args = parser.parse_args()
 
 
@@ -19,6 +20,8 @@ def main():
     np.random.seed(0)
     data_file = args.data_file
     mask = args.mask
+    remain = [int(i) for i in args.remain]
+    mask = [int(i) for i in args.mask.split(',')]
     Data = np.genfromtxt(data_file, delimiter=",", filling_values=0)
 
     Dim,Train_No,trainX,trainM = Data_Generate(Data)
@@ -36,7 +39,10 @@ def main():
 
     Missing0 = np.ones((Train_No,Dim))
     # print(mask.split(','))
-    for i in mask.split(","):
+    A = [0,1,2,3,4,5]
+    if len(remain) > 0:
+        mask=list(set(A) - set(remain))
+    for i in mask:
         Missing0[:,int(i)] = 0
 
 
