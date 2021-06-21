@@ -7,10 +7,11 @@ import numpy as np
 # Generate Population Data
 # df = pd.DataFrame(np.random.randn(10000,1)) #normal
 # Data = np.genfromtxt("data/tpc_ds_train_3col.csv", delimiter=",", filling_values=0,dtype=float)
-Data = np.genfromtxt("../gen_data/uniform_6col.csv", delimiter=",", filling_values=0,dtype=float)
+Data = np.genfromtxt("../gen_data/uce_train_plus.csv", delimiter=",", filling_values=0,dtype=float)
 
 df = pd.DataFrame(Data)
-s_mu = [list(df.sample(100).mean()) for i in range(20000)]
+n_rand = int(len(Data)/3)
+s_mu = [list(df.sample(100).mean()) for i in range(n_rand)]
 
 # print(Data)
 # print(df)
@@ -30,6 +31,6 @@ ss = pd.DataFrame(s_mu)
 # plt.show()
 
 # print(ss)
-ss.to_csv("../gen_data/uniform_6col_mean.csv",header=False,index=False)
+ss.to_csv("../gen_data/uce_train_plus_mean.csv",header=False,index=False)
 # ss.to_csv("../gen_data/data_gamma_1_3_mean.csv",header=False,index=False)
 # df.sa
