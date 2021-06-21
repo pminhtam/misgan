@@ -4,15 +4,21 @@ import numpy as np
 
 min, max = 0, 10
 x1 = np.random.uniform(min, max, 100000)
-x2 = np.random.uniform(min, max  ,size=100000)
-x3 = x1+x2
-x4 = np.random.uniform(min, max, 100000)
-x5 = np.random.uniform(min, max  ,size=100000)
-x6 = x4*x5
+x2 = np.random.uniform(min, max,size=100000)
+# x3 = x1+x2
+x3 = np.random.uniform(min, max,size=100000)
+x4 = np.random.uniform(min, max,size=100000)
+x5 = np.random.uniform(min, max,size=100000)
+x6 = np.random.uniform(min, max,size=100000)
+
+# x4 = np.random.uniform(min, max, 100000)
+# x5 = np.random.uniform(min, max  ,size=100000)
+# x6 = x4*x5
 a = np.asarray([x1,x2,x3,x4,x5,x6],dtype=np.float32)
 a = a.T
 print(a[0])
-np.savetxt('uniform_6col.csv',a,delimiter=',',fmt='%.5f')
+# np.savetxt('uniform_6col.csv',a,delimiter=',',fmt='%.5f')
+np.savetxt('uniform_raw_col.csv',a,delimiter=',',fmt='%.5f')
 
 # s = x1
 # print(x1)
